@@ -21,10 +21,8 @@ type ExperimentServer interface {
 }
 
 // NewExperimentServer returns a new ExperimentServer
-func NewExperimentServer() ExperimentServer {
-	return &experimentServer{
-		experimentService: service.NewExperimentService(),
-	}
+func NewExperimentServer(s service.ExperimentService) ExperimentServer {
+	return &experimentServer{experimentService: s}
 }
 
 type experimentServer struct {

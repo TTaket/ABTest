@@ -5,20 +5,20 @@ import (
 	commands "ABTest/pkgs/commands"
 )
 
-func NewStandServer() commands.MainInstance {
-	return &standServer{experimentServer.NewExperimentServer()}
+func NewStandServer(s experimentServer.ExperimentServer) commands.MainInstance {
+	return &standServer{srv: s}
 }
 
 // standServer 负责启动服务和生命周期管理
 type standServer struct {
-	experimentServer.ExperimentServer
+	srv experimentServer.ExperimentServer
 }
 
 func (s *standServer) Initialize() error {
 	return nil
 }
 func (s *standServer) RunLoop() {
-	s.Run()
+	s.srv.Run()
 }
 func (s *standServer) Destroy() {
 }
