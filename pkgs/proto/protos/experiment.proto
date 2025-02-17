@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package experiment;
+option go_package = "../pb_experiment/pb_experiment;pb_experiment";
+
+message GetExperimentRequest {
+  string experiment_id = 1;
+}
+
+message GetExperimentResponse {
+  string experiment_id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message CreateExperimentRequest {
+  string name = 1;
+  string description = 2;
+}
+
+message CreateExperimentResponse {
+  string experiment_id = 1;
+}
+
+service ExperimentService {
+  rpc GetExperiment(GetExperimentRequest) returns (GetExperimentResponse);
+  rpc CreateExperiment(CreateExperimentRequest) returns (CreateExperimentResponse);
+}
