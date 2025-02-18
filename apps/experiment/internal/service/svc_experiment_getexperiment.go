@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 
+	log "ABTest/pkgs/logger"
 	pb "ABTest/pkgs/proto/pb_experiment"
 )
 
@@ -12,5 +13,6 @@ func (experimentService) GetExperiment(ctx context.Context, req *pb.GetExperimen
 	resp.ExperimentId = "1"
 	resp.Description = "test"
 	resp.Name = "mock test"
+	log.Info(req, "\n", resp, "\n")
 	return resp, nil
 }
