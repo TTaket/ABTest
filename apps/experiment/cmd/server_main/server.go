@@ -3,11 +3,9 @@ package main
 import (
 	dig "ABTest/apps/experiment/dig"
 	commands "ABTest/pkgs/commands"
-	"fmt"
 )
 
 func init() {
-	fmt.Println("init experiment server")
 }
 
 func main() {

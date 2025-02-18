@@ -1,11 +1,10 @@
 package main
 
 import (
-	"context"
-	"fmt"
-
 	client "ABTest/apps/experiment/client"
 	pb "ABTest/pkgs/proto/pb_experiment"
+	"context"
+	"fmt"
 )
 
 func main() {

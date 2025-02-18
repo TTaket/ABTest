@@ -21,6 +21,15 @@ type MainInstance interface {
 	Destroy()
 }
 
+// func init() {
+// 	// 设置工作目录
+// 	_, filename, _, _ := runtime.Caller(0)
+// 	BaseDir := filepath.Dir(filepath.Dir(filepath.Dir(filename)))
+// 	if err := os.Chdir(BaseDir); err != nil {
+// 		panic(err)
+// 	}
+// }
+
 func Run(inst MainInstance) {
 	if inst == nil {
 		panic(errors.New("inst is nil, exit"))

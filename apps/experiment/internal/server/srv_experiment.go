@@ -1,6 +1,7 @@
 package server
 
 import (
+	conf "ABTest/apps/experiment/internal/config"
 	"ABTest/apps/experiment/internal/service"
 	pb "ABTest/pkgs/proto/pb_experiment"
 	"flag"
@@ -12,7 +13,7 @@ import (
 )
 
 var (
-	port = flag.Int("port", 50051, "The server port")
+	port = conf.GetConfig().Grpc.Port
 )
 
 // server 负责完成逻辑和grpc的交互
@@ -33,7 +34,7 @@ type experimentServer struct {
 // Run starts the gRPC server
 func (s *experimentServer) Run() {
 	flag.Parse()
-	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", *port))
+	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
