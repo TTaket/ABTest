@@ -9,13 +9,15 @@ import (
 	"github.com/spf13/cast"
 )
 
+const ServerName = "experiment"
+
 type Config struct {
 	Name string `yaml:"name"`
 	Desc string `yaml:"description"`
 	ID   int    `yaml:"server_id"`
 	Log  string `yaml:"log"`
 
-	Grpc conf.Grpc `yaml:"grpc_server"`
+	Grpc *conf.Grpc `yaml:"grpc_server"`
 }
 
 var (
@@ -25,18 +27,29 @@ var (
 )
 var (
 	config = new(Config)
+	bInit  = false
 )
 
-func init() {
-	flag.Parse()
-	utils.ReadYamlFile(*confFile, &config)
-	config.Grpc.Port = *grpcPort
-	config.ID = *serverID
-	config.Grpc.ServerID = *serverID
+func doinit() {
+	if bInit == false {
+		bInit = true
+		flag.Parse()
+		utils.ReadYamlFile(*confFile, &config)
+		if config.Grpc == nil {
+			panic("config.Grpc is nil")
+		}
+		config.Grpc.Port = *grpcPort
+		config.ID = *serverID
+		config.Grpc.ServerID = *serverID
+		log.MakeLogger(config.Log, GetConfig().Name+cast.ToString(GetConfig().ID))
+	}
+}
 
-	log.MakeLogger(config.Log, GetConfig().Name+cast.ToString(GetConfig().ID))
+func init() {
+	doinit()
 }
 
 func GetConfig() *Config {
+	doinit()
 	return config
 }

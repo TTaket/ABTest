@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug_all",
+      "program": "${workspaceFolder}/buildgen/${fileDirname}/${fileBasenameNoExtension}",
+      "args": [],
+      "cwd": "${fileDirname}",
+      "preLaunchTask": "C/C++: clang build active file all"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug_one",
+      "program": "${workspaceFolder}/buildgen/${fileDirname}/${fileBasenameNoExtension}",
+      "args": [],
+      "cwd": "${fileDirname}",
+      "preLaunchTask": "C/C++: clang build active file one"
+    },
+    {
+      "type": "go",
+      "request": "launch",
+      "name": "Debug_go",
+      "mode": "auto",
+      "program": "${fileDirname}",
+      "env": {},
+      "args": [],
+      "cwd": "${workspaceFolder}",
+    }
+  ]
+}

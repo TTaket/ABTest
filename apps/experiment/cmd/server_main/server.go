@@ -2,8 +2,11 @@ package main
 
 import (
 	dig "ABTest/apps/experiment/dig"
+	conf "ABTest/apps/experiment/internal/config"
 	commands "ABTest/pkgs/commands"
 )
+
+const serverName = conf.ServerName
 
 func init() {
 }

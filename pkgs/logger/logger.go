@@ -271,37 +271,37 @@ func Logger() *zap.SugaredLogger {
 }
 
 func Debug(args ...interface{}) {
-	Logger().Debug(args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Debug(args...)
 }
 
 func Debugf(template string, args ...interface{}) {
-	Logger().Debugf(template, args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Debugf(template, args...)
 }
 
 func Info(args ...interface{}) {
-	Logger().Info(args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Info(args...)
 }
 
 func Infof(template string, args ...interface{}) {
-	Logger().Infof(template, args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Infof(template, args...)
 }
 
 func Warn(args ...interface{}) {
-	Logger().Warn(args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Warn(args...)
 }
 
 func Warnf(template string, args ...interface{}) {
-	Logger().Warnf(template, args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Warnf(template, args...)
 }
 
 func Error(args ...interface{}) {
-	Logger().Error(args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Error(args...)
 }
 
 func Errorf(template string, args ...interface{}) {
-	Logger().Errorf(template, args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Errorf(template, args...)
 }
 
 func Panic(args ...interface{}) {
-	Logger().Panic(args...)
+	Logger().WithOptions(zap.AddCallerSkip(1)).Panic(args...)
 }

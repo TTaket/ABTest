@@ -14,3 +14,12 @@ grpc_server:
   connection_limit: 2000
   streams_limit: 2000
   max_recv_msg_size: 4096
+  jaeger:
+    host_port: "127.0.0.1:6831"
+    sampler_type: "const"
+    param: 1
+    log_spans: true
+    buffer_flush_interval: 1
+    max_packet_size: 0
+    enabled: true
+    log_path: "/var/log/ABTest/Jaeger/"

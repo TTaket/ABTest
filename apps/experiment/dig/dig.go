@@ -1,6 +1,7 @@
 package dig
 
 import (
+	"ABTest/apps/experiment/internal/config"
 	"ABTest/apps/experiment/internal/server"
 	"ABTest/apps/experiment/internal/service"
 	"ABTest/apps/experiment/internal/standserver"
@@ -15,6 +16,7 @@ func init() {
 	Provide(standserver.NewStandServer)
 	Provide(server.NewExperimentServer)
 	Provide(service.NewExperimentService)
+	Provide(config.GetConfig)
 }
 
 func Invoke(i interface{}) error {

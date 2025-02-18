@@ -15,6 +15,7 @@ type standServer struct {
 }
 
 func (s *standServer) Initialize() error {
+
 	return nil
 }
 func (s *standServer) RunLoop() {

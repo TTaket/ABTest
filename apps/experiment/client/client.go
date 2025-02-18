@@ -2,19 +2,12 @@ package client
 
 import (
 	"context"
-	"fmt"
-	"log"
 
 	conf "ABTest/apps/experiment/internal/config"
 	pb "ABTest/pkgs/proto/pb_experiment"
+	"ABTest/pkgs/xgrpc"
 
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
-)
-
-var (
-	port = conf.GetConfig().Grpc.Port
-	addr = fmt.Sprintf(":%d", port)
 )
 
 // TODO 同一个客户端 多次调用GetExperiment和CreateExperiment 会多次的调用connect
@@ -31,9 +24,7 @@ type experimentServiceClient struct {
 }
 
 func getClientConn() (*grpc.ClientConn, error) {
-	conn, err := grpc.NewClient(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	return conn, nil
+	configs, iocloser := xgrpc.NewGrpcClientConfigs(conf.GetConfig().Name, conf.GetConfig().Grpc, conf.GetConfig().Grpc.Jaeger)
+	defer iocloser.Close()
+	return xgrpc.GetClientConn(configs)
 }
