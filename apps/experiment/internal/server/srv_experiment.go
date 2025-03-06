@@ -7,6 +7,7 @@ import (
 	pb "ABTest/pkgs/proto/pb_experiment"
 	"io"
 
+	xetcd "ABTest/pkgs/xetcd"
 	xgrpc "ABTest/pkgs/xgrpc"
 
 	"google.golang.org/grpc"
@@ -54,6 +55,14 @@ func (s *experimentServer) Run() {
 
 	//注册服务
 	pb.RegisterExperimentServiceServer(srv, s)
+
+	//注册etcd
+	if s.cfg.Etcd != nil {
+		err := xetcd.RegisterEtcd(s.cfg.Etcd.Schema, s.cfg.Etcd.Endpoints, "0.0.0.0", port, s.cfg.Name, 10)
+		if err != nil {
+			logger.Error("Failed to register etcd: %v", err)
+		}
+	}
 
 	//启动grpc服务
 	xgrpc.RunServer(srv, *xgrpc.NewGrpcServerConfigs(s.cfg.Grpc))

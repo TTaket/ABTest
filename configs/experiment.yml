@@ -23,3 +23,12 @@ grpc_server:
     max_packet_size: 0
     enabled: true
     log_path: "/var/log/ABTest/Jaeger/"
+etcd:
+  endpoints: ["127.0.0.1:12379"]
+  username:
+  password:
+  schema: abtest
+  read_timeout: 5000
+  write_timeout: 5000
+  dial_timeout: 5000
+  balancing: round_robin

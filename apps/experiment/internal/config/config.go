@@ -18,6 +18,7 @@ type Config struct {
 	Log  string `yaml:"log"`
 
 	Grpc *conf.Grpc `yaml:"grpc_server"`
+	Etcd *conf.Etcd `yaml:"etcd"`
 }
 
 var (

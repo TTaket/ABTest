@@ -1,7 +1,20 @@
 services:
+  abtest-etcd:
+    image: bitnami/etcd:3.5
+    container_name: abtest-etcd
+    restart: always
+    ports:
+      - 12379:2379
+    networks:
+      abtest-network:
+        ipv4_address: "192.168.10.10"
+    privileged: true
+    environment:
+      - ALLOW_NONE_AUTHENTICATION=yes
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
   abtest-jaeger:
     image: jaegertracing/all-in-one:1.37
-    container_name: aest-jaeger
+    container_name: abtest-jaeger
     restart: always
     ports:
       - 5775:5775/udp

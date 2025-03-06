@@ -24,7 +24,7 @@ type experimentServiceClient struct {
 }
 
 func getClientConn() (*grpc.ClientConn, error) {
-	configs, iocloser := xgrpc.NewGrpcClientConfigs(conf.GetConfig().Name, conf.GetConfig().Grpc, conf.GetConfig().Grpc.Jaeger)
+	configs, iocloser := xgrpc.NewGrpcClientConfigs(conf.GetConfig().Name, conf.GetConfig().Grpc, conf.GetConfig().Etcd, conf.GetConfig().Grpc.Jaeger)
 	defer iocloser.Close()
 	return xgrpc.GetClientConn(configs)
 }
