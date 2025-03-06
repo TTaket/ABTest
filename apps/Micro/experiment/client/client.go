@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	conf "ABTest/apps/experiment/internal/config"
+	conf "ABTest/apps/Micro/experiment/internal/config"
 	pb "ABTest/pkgs/proto/pb_experiment"
 	"ABTest/pkgs/xgrpc"
 

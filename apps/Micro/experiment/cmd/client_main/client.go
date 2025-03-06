@@ -1,7 +1,7 @@
 package main
 
 import (
-	client "ABTest/apps/experiment/client"
+	client "ABTest/apps/Micro/experiment/client"
 	pb "ABTest/pkgs/proto/pb_experiment"
 	"context"
 	"fmt"

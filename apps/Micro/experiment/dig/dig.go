@@ -1,10 +1,10 @@
 package dig
 
 import (
-	"ABTest/apps/experiment/internal/config"
-	"ABTest/apps/experiment/internal/server"
-	"ABTest/apps/experiment/internal/service"
-	"ABTest/apps/experiment/internal/standserver"
+	"ABTest/apps/Micro/experiment/internal/config"
+	"ABTest/apps/Micro/experiment/internal/handle"
+	"ABTest/apps/Micro/experiment/internal/server"
+	"ABTest/apps/Micro/experiment/internal/service"
 	"log"
 
 	"go.uber.org/dig"
@@ -13,7 +13,7 @@ import (
 var container = dig.New()
 
 func init() {
-	Provide(standserver.NewStandServer)
+	Provide(handle.NewHandle)
 	Provide(server.NewExperimentServer)
 	Provide(service.NewExperimentService)
 	Provide(config.GetConfig)

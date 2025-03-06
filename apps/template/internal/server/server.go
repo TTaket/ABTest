@@ -1,10 +1,10 @@
 package server
 
 import (
-	conf "ABTest/apps/experiment/internal/config"
-	"ABTest/apps/experiment/internal/service"
+	conf "ABTest/apps/Xxx/internal/config"
+	"ABTest/apps/Xxx/internal/service"
 	logger "ABTest/pkgs/logger"
-	pb "ABTest/pkgs/proto/pb_experiment"
+	pb "ABTest/pkgs/proto/pb_Xxx"
 	"io"
 
 	xetcd "ABTest/pkgs/xetcd"
@@ -18,23 +18,24 @@ var (
 )
 
 // server 负责完成逻辑和grpc的融合
-type ExperimentServer interface {
+type XxxServer interface {
 	Run()
 }
 
-// NewExperimentServer returns a new ExperimentServer
-func NewExperimentServer(config *conf.Config, s service.ExperimentService) ExperimentServer {
-	return &experimentServer{cfg: config, experimentService: s}
+// NewXxxServer
+func NewXxxServer(config *conf.Config, s service.ExperimentService) XxxServer {
+	return &xxxServer{cfg: config, xxxService: s}
 }
 
-type experimentServer struct {
+type xxxServer struct {
 	pb.UnimplementedExperimentServiceServer
-	cfg               *conf.Config
-	experimentService service.ExperimentService
+	cfg *conf.Config
+	// TODO: 请根据实际情况修改xxxService的类型
+	xxxService service.xxxService
 }
 
 // Run starts the gRPC server
-func (s *experimentServer) Run() {
+func (s *xxxServer) Run() {
 
 	var (
 		srv     *grpc.Server
@@ -54,7 +55,7 @@ func (s *experimentServer) Run() {
 	}()
 
 	//注册服务
-	pb.RegisterExperimentServiceServer(srv, s)
+	pb.RegisterXxxServiceServer(srv, s)
 
 	//注册etcd
 	if s.cfg.Etcd != nil {
