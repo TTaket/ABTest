@@ -24,5 +24,5 @@ do
     # Generate gRPC files and place them in the target directory
     protoc --go_out=$target_dir --go_opt=paths=source_relative \
     --go-grpc_out=$target_dir --go-grpc_opt=paths=source_relative \
-    --proto_path="$ProtosDir" "$proto_file"
+    --proto_path="$ProtosDir" "$proto_file" --experimental_allow_proto3_optional
 done

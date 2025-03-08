@@ -1,0 +1,31 @@
+package dig
+
+import (
+	"ABTest/apps/Xxx/internal/config"
+	"ABTest/apps/Xxx/internal/handle"
+	"ABTest/apps/Xxx/internal/server"
+	"ABTest/apps/Xxx/internal/service"
+	"log"
+
+	"go.uber.org/dig"
+)
+
+var container = dig.New()
+
+func init() {
+	Provide(handle.NewHandle)
+	Provide(server.NewXxxServer)
+	Provide(service.NewXxxService)
+	Provide(config.GetConfig)
+}
+
+func Invoke(i interface{}) error {
+	return container.Invoke(i)
+}
+
+func Provide(constructor interface{}, opts ...dig.ProvideOption) {
+	err := container.Provide(constructor)
+	if err != nil {
+		log.Panic(err)
+	}
+}

@@ -12,6 +12,36 @@ services:
     environment:
       - ALLOW_NONE_AUTHENTICATION=yes
       - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379
+  abtest-mysql-userb:
+    image: mysql:8.0.29
+    container_name: abtest-mysql-userb
+    restart: always
+    ports:
+      - 13306:3306
+    networks:
+      abtest-network:
+        ipv4_address: "192.168.10.20"
+    volumes:
+      # init sql
+      - ./configs/docker/mysql/userb:/docker-entrypoint-initdb.d
+      - /Volumes/data/abtest/mysql/userb/data:/var/lib/mysql
+      #- /Volumes/data/abtest/mysql/userb/conf:/etc/mysql
+      - /Volumes/data/abtest/mysql/userb/mysql-files:/var/lib/mysql-files
+      - /Volumes/data/abtest/mysql/userb/log:/var/log/mysql
+    privileged: true
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: abtest2025
+      MYSQL_USER: abtest
+      MYSQL_PASSWORD: abtest2025
+      ALLOW_HOST: "%"
+      MYSQL_DATABASE: abtest_userb
+      LANG: en_US.UTF-8
+    command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+8:00'
+    ]
   abtest-jaeger:
     image: jaegertracing/all-in-one:1.37
     container_name: abtest-jaeger

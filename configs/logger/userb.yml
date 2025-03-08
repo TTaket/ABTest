@@ -1,6 +1,6 @@
 encoder: console
-path: /var/log/ABTest/
-directory: ABTest
+path: /var/log/ABTest/userb/
+directory: userb
 show_line: true
 encode_level: CapitalColor
 caller_type: 2

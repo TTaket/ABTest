@@ -1,0 +1,103 @@
+syntax = "proto3";
+
+package userb;
+option go_package = "../pb_userb/pb_userb;pb_userb";
+
+// 用于管理实验的用户的个人信息
+message UserInfo {
+  optional uint64 user_id = 1;
+  optional string name = 2;
+  optional string email = 3;
+  optional string phone = 4;
+  optional string address = 5;
+  optional string company = 6;
+  optional string otherjson = 500;
+}
+// 增加用户
+message AddUserRequest {
+  UserInfo user_info = 1;
+}
+message AddUserResponse {
+  bool success = 1;
+  uint64 user_id = 2;
+  string error = 100;
+}
+// 批量
+message BatchAddUserRequest {
+  repeated UserInfo user_info = 1;
+}
+message BatchAddUserResponse {
+  bool success = 1;
+  repeated uint64 user_id = 2;
+  repeated string errors = 100;
+}
+
+// 删除用户
+message DeleteUserRequest {
+  uint64 user_id = 1;
+}
+message DeleteUserResponse {
+  bool success = 1;
+  string error = 100;
+}
+// 批量
+message BatchDeleteUserRequest {
+  repeated uint64 user_id = 1;
+}
+message BatchDeleteUserResponse {
+  bool success = 1;
+  repeated string errors = 100;
+}
+
+// 更新用户信息
+message UpdateUserRequest {
+  UserInfo user_info = 1;
+}
+message UpdateUserResponse {
+  bool success = 1;
+  string error = 100;
+}
+// 批量
+message BatchUpdateUserRequest {
+  repeated UserInfo user_info = 1;
+}
+message BatchUpdateUserResponse {
+  bool success = 1;
+  repeated string errors = 100;
+}
+
+// 获取用户信息
+message GetUserInfoRequest {
+  UserInfo user_info = 1;
+}
+
+message GetUserInfoResponse {
+  bool success = 1;
+  UserInfo user_info = 2;
+  string error = 100;
+}
+// 批量
+message BatchGetUserInfoRequest {
+  repeated UserInfo user_info = 1;
+}
+message BatchGetUserInfoResponse {
+  bool success = 1;
+  repeated UserInfo user_info = 2;
+  repeated string errors = 100;
+}
+
+service UserbService {
+  rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
+  rpc BatchAddUser(BatchAddUserRequest) returns (BatchAddUserResponse) {}
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {}
+  rpc BatchDeleteUser(BatchDeleteUserRequest) returns (BatchDeleteUserResponse) {}
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {}
+  rpc BatchUpdateUser(BatchUpdateUserRequest) returns (BatchUpdateUserResponse) {}
+  rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse) {}
+  rpc BatchGetUserInfo(BatchGetUserInfoRequest) returns (BatchGetUserInfoResponse) {}
+}
+
+
+
+
+
