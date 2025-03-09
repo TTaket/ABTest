@@ -1,4 +1,4 @@
-module github.com/TTaket/ABTest
+module ABTest
 
 go 1.23.4
 

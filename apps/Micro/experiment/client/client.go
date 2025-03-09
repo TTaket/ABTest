@@ -11,16 +11,16 @@ import (
 )
 
 // TODO 同一个客户端 多次调用GetExperiment和CreateExperiment 会多次的调用connect
-type ExperimentServiceClient interface {
+type ExperimentClient interface {
 	GetExperiment(ctx context.Context, in *pb.GetExperimentRequest, opts ...grpc.CallOption) (*pb.GetExperimentResponse, error)
 	CreateExperiment(ctx context.Context, in *pb.CreateExperimentRequest, opts ...grpc.CallOption) (*pb.CreateExperimentResponse, error)
 }
 
-func NewExperimentServiceClient() ExperimentServiceClient {
-	return &experimentServiceClient{}
+func NewExperimentClient() ExperimentClient {
+	return &experimentClient{}
 }
 
-type experimentServiceClient struct {
+type experimentClient struct {
 }
 
 func getClientConn() (*grpc.ClientConn, error) {
