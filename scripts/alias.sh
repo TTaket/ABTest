@@ -23,3 +23,6 @@ alias docker_mysql="mysql -h 127.0.0.1 -P 13306 -u root -p'abtest2025'"
 
 # proto
 alias protoc_gen="sh ./scripts/genproto.sh"
+
+# log
+alias cd_log="cd /var/log/ABTest"

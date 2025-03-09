@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func (experimentServiceClient) GetExperiment(ctx context.Context, in *pb.GetExperimentRequest, opts ...grpc.CallOption) (*pb.GetExperimentResponse, error) {
+func (experimentClient) GetExperiment(ctx context.Context, in *pb.GetExperimentRequest, opts ...grpc.CallOption) (*pb.GetExperimentResponse, error) {
 	conn, err := getClientConn()
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)

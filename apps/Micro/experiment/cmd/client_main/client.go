@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	experimentClient := client.NewExperimentServiceClient()
+	experimentClient := client.NewExperimentClient()
 	// get experiment
 	{
 		req := &pb.GetExperimentRequest{
