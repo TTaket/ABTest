@@ -11,4 +11,5 @@ CREATE TABLE `userb` (
     `updated_at` TIMESTAMP(3) ,
     `deleted_at` TIMESTAMP(3) ,
     PRIMARY KEY (`user_id`)
+    Index idx_userb_deleted_at (deleted_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

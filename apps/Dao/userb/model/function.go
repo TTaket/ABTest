@@ -17,7 +17,6 @@ func (table *UserbBasic) CreateUserb(db *gorm.DB) error {
 	if err != nil {
 		return err
 	}
-	table.UserID = uint64(table.ID)
 	return nil
 }
 

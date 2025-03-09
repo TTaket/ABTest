@@ -2,21 +2,24 @@ package model
 
 import (
 	"fmt"
+	"time"
 
 	"gorm.io/gorm"
 )
 
 // UserbModel UserbModel
 type UserbBasic struct {
-	gorm.Model
+	UserID    uint64 `gorm:"primaryKey;column:user_id;autoIncrement;not null"`
+	Name      string `gorm:"column:name;type:varchar(64)"`
+	Email     string `gorm:"column:email;type:varchar(64)"`
+	Phone     string `gorm:"column:phone;type:varchar(32)"`
+	Address   string `gorm:"column:address;type:varchar(255)"`
+	Company   string `gorm:"column:company;type:varchar(255)"`
+	Otherjson string `gorm:"column:otherjson;type:json"`
 
-	UserID    uint64 `gorm:"primaryKey;autoIncrement;not null"`
-	Name      string
-	Email     string
-	Phone     string
-	Address   string
-	Company   string
-	Otherjson string
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 func (table *UserbBasic) TableName() string {

@@ -22,9 +22,9 @@ type Config struct {
 }
 
 var (
-	confFile = flag.String("confpos", "./configs/experiment.yml", "The configuration file path")
-	grpcPort = flag.Int("port", 50051, "The server port")
-	serverID = flag.Int("id", 1, "The server id")
+	confFile = flag.String("experiment_confpos", "./configs/experiment.yml", "The configuration file path")
+	grpcPort = flag.Int("experiment_port", 50051, "The server port")
+	serverID = flag.Int("experiment_id", 1, "The server id")
 )
 var (
 	config = new(Config)

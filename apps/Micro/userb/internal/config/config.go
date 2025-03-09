@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cast"
 )
 
-const ServerName = "experiment"
+const ServerName = "userb"
 
 // 服务内所用配置 从服务内config文件中读取
 type Config struct {
@@ -25,9 +25,9 @@ type Config struct {
 
 // 从配置文件中读取配置并且支持命令行参数
 var (
-	confFile = flag.String("confpos", "./configs/userb.yml", "The configuration file path")
-	grpcPort = flag.Int("port", 50052, "The server port")
-	serverID = flag.Int("id", 1, "The server id")
+	confFile = flag.String("userb_confpos", "./configs/userb.yml", "The configuration file path")
+	grpcPort = flag.Int("userb_port", 50052, "The server port")
+	serverID = flag.Int("userb_id", 1, "The server id")
 )
 var (
 	config = new(Config)
