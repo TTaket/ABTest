@@ -36,6 +36,22 @@ func (s *userbService) AddUser(ctx context.Context, in *pb.AddUserRequest) (*pb.
 		out.Error = err.Error()
 		return out, err
 	}
+	//Todo: temp
+	// 调用ExperimentClient的AddExperiment方法
+	/* 	{
+		experimentClient := client.NewExperimentClient()
+		// get experiment
+		{
+			req := &pb_experiment.GetExperimentRequest{
+				ExperimentId: "1",
+			}
+			resp, err := experimentClient.GetExperiment(ctx, req)
+			if err != nil {
+				panic(err)
+			}
+			fmt.Printf("TestDemo: get experiment %s\n", resp.String())
+		}
+	} */
 
 	out.Success = true
 	out.UserId = userbmodel.UserID

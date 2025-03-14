@@ -1,11 +1,13 @@
 package client
 
 import (
+	log "ABTest/pkgs/logger"
 	"ABTest/pkgs/xgrpc"
 	"context"
 
 	pb "ABTest/pkgs/proto/pb_userb"
 
+	"github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 
 	conf "ABTest/apps/Micro/userb/internal/config"
@@ -23,18 +25,25 @@ type UserbClient interface {
 }
 
 func NewUserbClient() UserbClient {
-	return &userbClient{}
+	conn, tracer, err := getClientConn()
+	if err != nil || conn == nil {
+		log.Errorf("did not connect: %v", err)
+		return nil
+	}
+	return &userbClient{conn: conn, tracer: tracer}
 }
 
 type userbClient struct {
+	conn   *grpc.ClientConn
+	tracer opentracing.Tracer
 }
 
 // 内部使用
-func getClientConn() (*grpc.ClientConn, error) {
+func getClientConn() (*grpc.ClientConn, opentracing.Tracer, error) {
 	// 填装Client配置
-	configs, iocloser := xgrpc.NewGrpcClientConfigs(conf.GetConfig().Name, conf.GetConfig().Grpc, conf.GetConfig().Etcd, conf.GetConfig().Grpc.Jaeger)
-	defer iocloser.Close()
+	configs, tracer, _ := xgrpc.NewGrpcClientConfigs(conf.GetConfig().Name, conf.GetConfig().Grpc, conf.GetConfig().Etcd, conf.GetConfig().Grpc.Jaeger)
 
 	// 获取连接并返回
-	return xgrpc.GetClientConn(configs)
+	conn, err := xgrpc.GetClientConn(configs)
+	return conn, tracer, err
 }

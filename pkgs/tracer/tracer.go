@@ -2,7 +2,6 @@ package tracer
 
 import (
 	conf "ABTest/pkgs/config"
-	"ABTest/pkgs/logger"
 	"fmt"
 	"io"
 	"log"
@@ -14,7 +13,11 @@ import (
 
 func NewTracer(servicename string, c *conf.Jaeger) (tracer opentracing.Tracer, closer io.Closer, err error) {
 	// 1. 打开日志文件
-	logFile, err := os.OpenFile(fmt.Sprintf("%sjaeger.log", c.LogPath), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	logDir := fmt.Sprintf("%s%s", c.LogPath, servicename+"/")
+	if err := os.MkdirAll(logDir, 0755); err != nil {
+		return nil, nil, fmt.Errorf("failed to create log directory: %w", err)
+	}
+	logFile, err := os.OpenFile(fmt.Sprintf("%sjaeger.log", logDir), os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to open log file: %w", err)
 	}
@@ -26,18 +29,17 @@ func NewTracer(servicename string, c *conf.Jaeger) (tracer opentracing.Tracer, c
 			log.Ldate|log.Ltime|log.Lshortfile), // 日志格式
 	}
 	// TODO 自动清理日志文件
-
-	cfg, err := jaegercfg.FromEnv()
-	if err != nil {
-		logger.Error("Could not parse Jaeger env vars; ", err)
-		return
+	cfg := &jaegercfg.Configuration{
+		ServiceName: servicename,
+		Sampler: &jaegercfg.SamplerConfig{
+			Type:  c.SamplerType,
+			Param: c.Param,
+		},
+		Reporter: &jaegercfg.ReporterConfig{
+			LogSpans:           c.LogSpans,
+			LocalAgentHostPort: c.HostPort,
+		},
 	}
-
-	cfg.ServiceName = servicename
-	cfg.Sampler.Type = c.SamplerType
-	cfg.Sampler.Param = c.Param
-	cfg.Reporter.LogSpans = c.LogSpans
-	cfg.Reporter.LocalAgentHostPort = c.HostPort
 
 	tracer, closer, err = cfg.NewTracer(jaegercfg.Logger(jaegerLogger))
 	return

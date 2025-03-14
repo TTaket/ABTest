@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package server2;
+option go_package = "./pb_server2/pb_server2;pb_server2";
+
+message GetRequest {
+  string experiment_id = 1;
+}
+
+message GetResponse {
+  string experiment_id = 1;
+}
+
+service Server2Service {
+  rpc Get(GetRequest) returns (GetResponse);
+}

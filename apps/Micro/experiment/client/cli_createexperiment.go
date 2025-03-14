@@ -8,14 +8,9 @@ import (
 	"google.golang.org/grpc"
 )
 
-func (experimentClient) CreateExperiment(ctx context.Context, in *pb.CreateExperimentRequest, opts ...grpc.CallOption) (*pb.CreateExperimentResponse, error) {
-	conn, err := getClientConn()
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer conn.Close()
-	c := pb.NewExperimentServiceClient(conn)
-	r, err := c.CreateExperiment(ctx, in)
+func (c *experimentClient) CreateExperiment(ctx context.Context, in *pb.CreateExperimentRequest, opts ...grpc.CallOption) (*pb.CreateExperimentResponse, error) {
+	client := pb.NewExperimentServiceClient(c.Conn)
+	r, err := client.CreateExperiment(ctx, in)
 	if err != nil {
 		log.Fatalf("could not greet: %v", err)
 	}

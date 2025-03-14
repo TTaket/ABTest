@@ -22,8 +22,8 @@ type XxxClient struct {
 
 func getClientConn() (*grpc.ClientConn, error) {
 	// 填装Client配置
-	configs, iocloser := xgrpc.NewGrpcClientConfigs(conf.GetConfig().Name, conf.GetConfig().Grpc, conf.GetConfig().Etcd, conf.GetConfig().Grpc.Jaeger)
-	defer iocloser.Close()
+	configs, _ := xgrpc.NewGrpcClientConfigs(conf.GetConfig().Name, conf.GetConfig().Grpc, conf.GetConfig().Etcd, conf.GetConfig().Grpc.Jaeger)
+	// defer iocloser.Close()
 
 	// 获取连接并返回
 	return xgrpc.GetClientConn(configs)

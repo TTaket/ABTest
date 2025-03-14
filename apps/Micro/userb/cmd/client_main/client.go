@@ -25,4 +25,74 @@ func main() {
 		}
 		fmt.Println(resp.String())
 	}
+	{
+		// 请求体
+		req := &pb.AddUserRequest{
+			UserInfo: &pb.UserInfo{
+				Name: proto.String("test"),
+			},
+		}
+		// 调用函数
+		resp, err := UserbClient.AddUser(context.Background(), req)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(resp.String())
+	}
+	{
+		// 请求体
+		req := &pb.AddUserRequest{
+			UserInfo: &pb.UserInfo{
+				Name: proto.String("test"),
+			},
+		}
+		// 调用函数
+		resp, err := UserbClient.AddUser(context.Background(), req)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(resp.String())
+	}
+	{
+		// 请求体
+		req := &pb.AddUserRequest{
+			UserInfo: &pb.UserInfo{
+				Name: proto.String("test"),
+			},
+		}
+		// 调用函数
+		resp, err := UserbClient.AddUser(context.Background(), req)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(resp.String())
+	}
+	{
+		// 请求体
+		req := &pb.AddUserRequest{
+			UserInfo: &pb.UserInfo{
+				Name: proto.String("test"),
+			},
+		}
+		// 调用函数
+		resp, err := UserbClient.AddUser(context.Background(), req)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(resp.String())
+	}
+	{
+		// 请求体
+		req := &pb.AddUserRequest{
+			UserInfo: &pb.UserInfo{
+				Name: proto.String("test"),
+			},
+		}
+		// 调用函数
+		resp, err := UserbClient.AddUser(context.Background(), req)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(resp.String())
+	}
 }

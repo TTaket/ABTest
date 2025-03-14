@@ -12,7 +12,7 @@ import (
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	otgrpc "github.com/opentracing-contrib/go-grpc"
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
 	"github.com/opentracing/opentracing-go"
 	"golang.org/x/net/netutil"
 	grpc "google.golang.org/grpc"
@@ -48,7 +48,8 @@ func NewServer(c *conf.Grpc) (grpcServer *grpc.Server, closer io.Closer, err err
 		var tracer opentracing.Tracer
 		tracer, closer, err = Jaeger.NewTracer(c.Name, c.Jaeger)
 		if err == nil {
-			unaryInterceptors = append(unaryInterceptors, otgrpc.OpenTracingServerInterceptor(tracer))
+			opentracing.SetGlobalTracer(tracer)
+			unaryInterceptors = append(unaryInterceptors, grpc_opentracing.UnaryServerInterceptor())
 		} else {
 			logger.Errorf("Failed to create Jaeger tracer: %v", err)
 			return grpcServer, closer, err

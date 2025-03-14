@@ -3,14 +3,15 @@ package xgrpc
 import (
 	conf "ABTest/pkgs/config"
 	log "ABTest/pkgs/logger"
-	trace "ABTest/pkgs/tracer"
 	"ABTest/pkgs/xetcd"
 	"fmt"
 	"io"
 	"time"
 
-	otgrpc "github.com/opentracing-contrib/go-grpc"
-	"github.com/opentracing/opentracing-go"
+	trace "ABTest/pkgs/tracer"
+
+	grpc_opentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	opentracing "github.com/opentracing/opentracing-go"
 	grpc "google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 	"google.golang.org/grpc/resolver"
@@ -27,13 +28,13 @@ type Tracing struct {
 	Enabled bool `yaml:"enabled"`
 }
 
-func NewGrpcClientConfigs(clientname string, grpc *conf.Grpc, etcd *conf.Etcd, jaegercfg *conf.Jaeger) (*GrpcClientConfigs, io.Closer) {
+func NewGrpcClientConfigs(clientname string, grpc *conf.Grpc, etcd *conf.Etcd, jaegercfg *conf.Jaeger) (*GrpcClientConfigs, opentracing.Tracer, io.Closer) {
 	var (
 		tracer opentracing.Tracer
 		closer io.Closer
 	)
 	if jaegercfg.Enabled {
-		tracer, closer, _ = trace.NewTracer(clientname, jaegercfg)
+		tracer, closer, _ = trace.NewTracer("client_"+clientname, jaegercfg)
 	}
 	configs := &GrpcClientConfigs{
 		grpc:        grpc,
@@ -41,14 +42,16 @@ func NewGrpcClientConfigs(clientname string, grpc *conf.Grpc, etcd *conf.Etcd, j
 		Tracing:     &Tracing{Tracer: tracer, Enabled: jaegercfg.Enabled},
 		Etcd:        etcd,
 	}
-	return configs, closer
+	return configs, tracer, closer
 }
 
 func SetClientOpts(c *GrpcClientConfigs) (opts []grpc.DialOption) {
 	opts = append(opts, grpc.WithInsecure())
 	// tracing
 	if c.Tracing.Enabled {
-		opts = append(opts, grpc.WithUnaryInterceptor(otgrpc.OpenTracingClientInterceptor(c.Tracing.Tracer)))
+		opts = append(opts, grpc.WithUnaryInterceptor(grpc_opentracing.UnaryClientInterceptor(
+			grpc_opentracing.WithTracer(c.Tracing.Tracer),
+		)))
 	}
 	// keepalive
 	keepParams := grpc.WithKeepaliveParams(keepalive.ClientParameters{
