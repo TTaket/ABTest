@@ -1,0 +1,16 @@
+base:
+  modulename: experiment #modulename # example:experiment
+  modulename_big: Experiment #modulename(大写) # example:Experiment
+  modulename_sma: experiment #modulename(小写) # example:experiment
+  rpcservicename: ExperimentService #rpc 服务名称（最底下的service） # example:ExperimentService
+  rpcserviceclient: NewExperimentServiceClient #New rpc Service Client  # example:NewExperimentServiceClient
+
+func:
+  - key: "%001"
+    value: createexperiment #Function_01（小写） # example:createexperiment
+  - key: "%002"
+    value: CreateExperiment #Function_01（大写） # example:CreateExperiment
+  - key: "%003"
+    value: getexperiment #Function_02（小写）# example:getexperiment
+  - key: "%004"
+    value: GetExperiment #Function_02（大写） # example:GetExperiment

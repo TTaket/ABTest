@@ -3,22 +3,21 @@ package client
 import (
 	"context"
 
-	conf "ABTest/apps/Micro/experiment/internal/config"
+	conf "ABTest/apps/Micro/%1/internal/config"
 	log "ABTest/pkgs/logger"
-	pb "ABTest/pkgs/proto/pb_experiment"
+	pb "ABTest/pkgs/proto/pb_%1"
 	"ABTest/pkgs/xgrpc"
 
 	"github.com/opentracing/opentracing-go"
 	"google.golang.org/grpc"
 )
 
-type ExperimentClient interface {
-	GetExperiment(ctx context.Context, in *pb.GetExperimentRequest, opts ...grpc.CallOption) (*pb.GetExperimentResponse, error)
-	CreateExperiment(ctx context.Context, in *pb.CreateExperimentRequest, opts ...grpc.CallOption) (*pb.CreateExperimentResponse, error)
+type %2Client interface {
+	%00001
 	Logger() *log.MyLogger
 }
 
-func NewExperimentClient() ExperimentClient {
+func New%2Client() %2Client {
 	//log
 	logger := log.NewMyLogger(conf.GetConfig().Log, conf.GetConfig().Name+"_client")
 	//xgrpc
@@ -27,16 +26,16 @@ func NewExperimentClient() ExperimentClient {
 		logger.Errorf("did not connect: %v", err)
 		return nil
 	}
-	return &experimentClient{Conn: conn, Tracer: tracer, MyLogger: logger}
+	return &%3Client{Conn: conn, Tracer: tracer, MyLogger: logger}
 }
 
-type experimentClient struct {
+type %3Client struct {
 	Conn     *grpc.ClientConn
 	Tracer   opentracing.Tracer
 	MyLogger *log.MyLogger
 }
 
-func (c *experimentClient) Logger() *log.MyLogger {
+func (c *%3Client) Logger() *log.MyLogger {
 	return c.MyLogger
 }
 
