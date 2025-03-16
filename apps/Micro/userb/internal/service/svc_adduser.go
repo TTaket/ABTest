@@ -5,73 +5,60 @@ import (
 	"errors"
 
 	modelutils "ABTest/apps/Dao/userb/utils"
+	"ABTest/pkgs/logger"
 	pb "ABTest/pkgs/proto/pb_userb"
 	xmysql "ABTest/pkgs/xmysql"
 )
 
 func (s *userbService) AddUser(ctx context.Context, in *pb.AddUserRequest) (*pb.AddUserResponse, error) {
-	// 创建返回体
+	logger.Infof("AddUser service begin: %v", in)
+
 	out := &pb.AddUserResponse{
 		Success: false,
 		UserId:  0,
 	}
 
-	// 获得用户信息
 	userbmodel, err := modelutils.TranslateProtoUserbInfoToUserbModel(in.UserInfo)
 	if err != nil {
+		logger.Errorf("TranslateProtoUserbInfoToUserbModel failed: %v", err)
 		out.Error = err.Error()
 		return out, err
 	}
 
-	// get db
 	db := xmysql.GetDB()
 	if db == nil {
+		logger.Errorf("GetDB failed")
 		out.Error = xmysql.ERR_GetDB_FAILED.Error()
 		return out, xmysql.ERR_GetDB_FAILED
 	}
 
-	// 创建用户
 	err = userbmodel.CreateUserb(db)
 	if err != nil {
+		logger.Errorf("CreateUserb failed: %v", err)
 		out.Error = err.Error()
 		return out, err
 	}
-	//Todo: temp
-	// 调用ExperimentClient的AddExperiment方法
-	/* 	{
-		experimentClient := client.NewExperimentClient()
-		// get experiment
-		{
-			req := &pb_experiment.GetExperimentRequest{
-				ExperimentId: "1",
-			}
-			resp, err := experimentClient.GetExperiment(ctx, req)
-			if err != nil {
-				panic(err)
-			}
-			fmt.Printf("TestDemo: get experiment %s\n", resp.String())
-		}
-	} */
 
 	out.Success = true
 	out.UserId = userbmodel.UserID
+	logger.Infof("AddUser service end: %v", out)
 	return out, nil
 }
 
 func (s *userbService) BatchAddUser(ctx context.Context, in *pb.BatchAddUserRequest) (*pb.BatchAddUserResponse, error) {
-	// 创建返回体
+	logger.Infof("BatchAddUser service begin: %v", in)
+
 	out := &pb.BatchAddUserResponse{
 		Success: false,
 	}
-
 	var userIDs []uint64
 	var errinfos []string
 	var errflag bool
 
-	// get db
 	db := xmysql.GetDB()
 	if db == nil {
 		out.Errors = append(out.Errors, xmysql.ERR_GetDB_FAILED.Error())
+		logger.Errorf("BatchAddUser GetDB failed: %v", xmysql.ERR_GetDB_FAILED)
 		return out, xmysql.ERR_GetDB_FAILED
 	}
 
@@ -96,15 +83,16 @@ func (s *userbService) BatchAddUser(ctx context.Context, in *pb.BatchAddUserRequ
 		errinfos = append(errinfos, "")
 	}
 
-	// 返回结果
 	if errflag {
 		err := errors.New("BatchAddUser failed")
 		out.Success = false
 		out.Errors = errinfos
 		out.UserId = userIDs
+		logger.Errorf("BatchAddUser service end with error: %v", out)
 		return out, err
 	}
 	out.Success = true
 	out.UserId = userIDs
+	logger.Infof("BatchAddUser service end: %v", out)
 	return out, nil
 }

@@ -29,6 +29,7 @@ var (
 var (
 	config = new(Config)
 	bInit  = false
+	Log    = &log.MyLogger{}
 )
 
 func doinit() {
@@ -42,7 +43,7 @@ func doinit() {
 		config.Grpc.Port = *grpcPort
 		config.ID = *serverID
 		config.Grpc.ServerID = *serverID
-		log.MakeLogger(config.Log, GetConfig().Name+cast.ToString(GetConfig().ID))
+		Log = log.NewMyLogger(config.Log, GetConfig().Name+cast.ToString(GetConfig().ID))
 	}
 }
 

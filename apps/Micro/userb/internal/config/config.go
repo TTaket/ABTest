@@ -2,6 +2,7 @@ package config
 
 import (
 	conf "ABTest/pkgs/config"
+	"ABTest/pkgs/logger"
 	log "ABTest/pkgs/logger"
 	utils "ABTest/pkgs/utils"
 	"flag"
@@ -32,6 +33,7 @@ var (
 var (
 	config = new(Config)
 	bInit  = false
+	Log    = &log.MyLogger{}
 )
 
 func doinit() {
@@ -49,7 +51,7 @@ func doinit() {
 		config.Grpc.ServerID = *serverID
 
 		// 初始化日志
-		log.MakeLogger(config.Log, GetConfig().Name+cast.ToString(GetConfig().ID))
+		Log = logger.NewMyLogger(config.Log, GetConfig().Name+cast.ToString(GetConfig().ID))
 	}
 }
 

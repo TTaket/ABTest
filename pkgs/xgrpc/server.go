@@ -93,6 +93,7 @@ func RunServer(s *grpc.Server, c GrpcServerConfigs) error {
 		listener = netutil.LimitListener(listener, c.grpc.ConnectionLimit)
 	}
 
+	logger.Infof("grpc running success at: %s", address)
 	err = s.Serve(listener)
 	if err != nil {
 		logger.Error(err.Error())

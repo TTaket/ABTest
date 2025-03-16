@@ -9,15 +9,16 @@ import (
 
 func main() {
 	experimentClient := client.NewExperimentClient()
-	// get experiment
+	// get experiment demo
 	{
 		req := &pb.GetExperimentRequest{
 			ExperimentId: "1",
 		}
 		resp, err := experimentClient.GetExperiment(context.Background(), req)
 		if err != nil {
-			panic(err)
+			// 用户视角 不能使用mylogger
+			fmt.Println(err)
 		}
-		fmt.Println(resp.String())
+		fmt.Println("用户行为...", resp)
 	}
 }

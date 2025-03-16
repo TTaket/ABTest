@@ -32,11 +32,6 @@ const (
 )
 
 const (
-	DefaultConfig    = "./configs/logger.yaml"
-	DefaultDirectory = "ABTest"
-)
-
-const (
 	CallerDepth = 8
 )
 
@@ -44,6 +39,15 @@ const (
 	CallerTypeNormal   = 0
 	CallerTypeSeparate = 1
 	CallerTypeFull     = 2
+)
+
+const (
+	DefaultCfg = "./configs/logdefault.yml"
+	DefaultDir = ""
+)
+
+var (
+	logger *zap.SugaredLogger
 )
 
 type Zap struct {
@@ -65,11 +69,7 @@ type Segment struct {
 	Compress   bool `yaml:"compress"`
 }
 
-var (
-	logger *zap.SugaredLogger
-)
-
-func MakeLogger(cfgPath string, directory string) {
+func MakeLogger(cfgPath string, directory ...string) *zap.SugaredLogger {
 	var (
 		logCfg = new(Zap)
 	)
@@ -77,8 +77,11 @@ func MakeLogger(cfgPath string, directory string) {
 	if err != nil {
 		panic(err)
 	}
-	logCfg.Directory = directory
+	if len(directory) > 0 && directory[0] != "" {
+		logCfg.Directory = directory[0]
+	}
 	logger = newLogger(logCfg)
+	return logger
 }
 
 func newLogger(cfg *Zap) (sl *zap.SugaredLogger) {
@@ -265,11 +268,10 @@ func prettyCaller(file string, line int) string {
 // 对外接口
 func Logger() *zap.SugaredLogger {
 	if logger == nil {
-		MakeLogger(DefaultConfig, DefaultDirectory)
+		logger = MakeLogger(DefaultCfg, DefaultDir)
 	}
 	return logger
 }
-
 func Debug(args ...interface{}) {
 	Logger().WithOptions(zap.AddCallerSkip(1)).Debug(args...)
 }
@@ -304,4 +306,8 @@ func Errorf(template string, args ...interface{}) {
 
 func Panic(args ...interface{}) {
 	Logger().WithOptions(zap.AddCallerSkip(1)).Panic(args...)
+}
+
+func Panicf(template string, args ...interface{}) {
+	Logger().WithOptions(zap.AddCallerSkip(1)).Panicf(template, args...)
 }

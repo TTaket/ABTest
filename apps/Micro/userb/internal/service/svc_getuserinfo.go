@@ -6,6 +6,7 @@ import (
 
 	model "ABTest/apps/Dao/userb/model"
 	modelutils "ABTest/apps/Dao/userb/utils"
+	"ABTest/pkgs/logger"
 	pb "ABTest/pkgs/proto/pb_userb"
 	"ABTest/pkgs/xmysql"
 )
@@ -22,55 +23,61 @@ var (
 )
 
 func (s *userbService) GetUserInfo(ctx context.Context, in *pb.GetUserInfoRequest) (*pb.GetUserInfoResponse, error) {
-	// 创建返回体
+	logger.Infof("GetUserInfo service begin: %v", in)
+
 	out := &pb.GetUserInfoResponse{
 		Success: false,
 	}
-	// 获得db
 	db := xmysql.GetDB()
 	if db == nil {
 		out.Error = errGetDBFailed.Error()
+		logger.Errorf("GetUserInfo GetDB failed: %v", errGetDBFailed)
 		return out, errGetDBFailed
 	}
 
-	// 查询用户
 	userbmodel, err := model.GetUserbByID(db, *in.UserInfo.UserId)
 	if err != nil {
 		out.Error = err.Error()
+		logger.Errorf("GetUserInfo failed: %v", err)
 		return out, err
 	}
-	// 返回结果
+
 	userinfo, err := modelutils.TranslateUserbModelToProtoUserbInfo(userbmodel)
 	if err != nil {
 		out.Error = err.Error()
+		logger.Errorf("GetUserInfo translate failed: %v", err)
 		return out, err
 	}
 
 	out.Success = true
 	out.UserInfo = userinfo
+	logger.Infof("GetUserInfo service end: %v", out)
 	return out, nil
 }
 
 func (s *userbService) BatchGetUserInfo(ctx context.Context, in *pb.BatchGetUserInfoRequest) (*pb.BatchGetUserInfoResponse, error) {
-	// 创建返回体
+	logger.Infof("BatchGetUserInfo service begin: %v", in)
+
 	out := &pb.BatchGetUserInfoResponse{
 		Success: false,
 	}
 	var errflag bool = false
 	var userinfos []*pb.UserInfo
 	var errinfo []string
-	// 获得db
+
 	db := xmysql.GetDB()
 	if db == nil {
 		out.Errors = append(out.Errors, errGetDBFailed.Error())
+		logger.Errorf("BatchGetUserInfo GetDB failed: %v", errGetDBFailed)
 		return out, errGetDBFailed
 	}
-	// 取出id
+
 	if in.UserInfo == nil {
 		out.Errors = append(out.Errors, errIdRequired.Error())
+		logger.Errorf("BatchGetUserInfo missing user id: %v", errIdRequired)
 		return out, errIdRequired
 	}
-	// 查询用户
+
 	for _, userinfo := range in.UserInfo {
 		userbmodels, err := model.GetUserbByID(db, *userinfo.UserId)
 		if err != nil {
@@ -91,14 +98,16 @@ func (s *userbService) BatchGetUserInfo(ctx context.Context, in *pb.BatchGetUser
 		userinfos = append(userinfos, retuserinfo)
 		errinfo = append(errinfo, "")
 	}
-	// 返回结果
+
 	if errflag {
 		out.Errors = errinfo
 		out.UserInfo = userinfos
+		logger.Errorf("BatchGetUserInfo service end with error: %v", out)
 		return out, errFailed
 	}
 
 	out.Success = true
 	out.UserInfo = userinfos
+	logger.Infof("BatchGetUserInfo service end: %v", out)
 	return out, nil
 }

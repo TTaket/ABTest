@@ -101,7 +101,11 @@ func ConnectDB(cfg *conf.Mysql) (db *gorm.DB, err error) {
 		cfg.Address,
 		cfg.Db)
 	if cfg.LogLevel == 0 {
-		cfg.LogLevel = 4
+		cfg.LogLevel = 3
+		// level 1: Silent
+		// level 2: Error
+		// level 3: Warn
+		// level 4: Info
 	}
 	// 定义日志配置
 	gormLogger := gormlogger.New(
@@ -110,7 +114,7 @@ func ConnectDB(cfg *conf.Mysql) (db *gorm.DB, err error) {
 			SlowThreshold:             time.Second,                       // 慢查询阈值
 			LogLevel:                  gormlogger.LogLevel(cfg.LogLevel), // 日志级别
 			IgnoreRecordNotFoundError: true,                              // 忽略记录未找到错误
-			Colorful:                  false,                             // 禁用彩色打印
+			Colorful:                  true,                              // 禁用彩色打印
 		},
 	)
 	opts = &gorm.Config{

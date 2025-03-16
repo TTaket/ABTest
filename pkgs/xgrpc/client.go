@@ -83,6 +83,7 @@ func GetClientConn(c *GrpcClientConfigs) (*grpc.ClientConn, error) {
 		conn, err := grpc.Dial(fmt.Sprintf("%s:///%s", c.Etcd.Schema, c.ServiceName), opts...)
 		if err != nil {
 			log.Errorf("did not connect by etcd : %v", err)
+			return nil, err
 		}
 		return conn, nil
 
@@ -91,6 +92,7 @@ func GetClientConn(c *GrpcClientConfigs) (*grpc.ClientConn, error) {
 		conn, err := grpc.Dial(fmt.Sprintf(":%d", c.grpc.Port), opts...)
 		if err != nil {
 			log.Errorf("did not connect: %v", err)
+			return nil, err
 		}
 		return conn, nil
 	}

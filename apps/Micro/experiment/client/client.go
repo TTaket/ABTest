@@ -16,20 +16,29 @@ import (
 type ExperimentClient interface {
 	GetExperiment(ctx context.Context, in *pb.GetExperimentRequest, opts ...grpc.CallOption) (*pb.GetExperimentResponse, error)
 	CreateExperiment(ctx context.Context, in *pb.CreateExperimentRequest, opts ...grpc.CallOption) (*pb.CreateExperimentResponse, error)
+	Logger() *log.MyLogger
 }
 
 func NewExperimentClient() ExperimentClient {
+	//log
+	logger := log.NewMyLogger(conf.GetConfig().Log, conf.GetConfig().Name+"_client")
+	//xgrpc
 	conn, tracer, err := getClientConn()
 	if err != nil || conn == nil {
-		log.Errorf("did not connect: %v", err)
+		logger.Errorf("did not connect: %v", err)
 		return nil
 	}
-	return &experimentClient{Conn: conn, Tracer: tracer}
+	return &experimentClient{Conn: conn, Tracer: tracer, MyLogger: logger}
 }
 
 type experimentClient struct {
-	Conn   *grpc.ClientConn
-	Tracer opentracing.Tracer
+	Conn     *grpc.ClientConn
+	Tracer   opentracing.Tracer
+	MyLogger *log.MyLogger
+}
+
+func (c *experimentClient) Logger() *log.MyLogger {
+	return c.MyLogger
 }
 
 func getClientConn() (*grpc.ClientConn, opentracing.Tracer, error) {
@@ -38,5 +47,8 @@ func getClientConn() (*grpc.ClientConn, opentracing.Tracer, error) {
 
 	// 获取连接并返回
 	conn, err := xgrpc.GetClientConn(configs)
+	if err != nil {
+		panic(err)
+	}
 	return conn, tracer, err
 }

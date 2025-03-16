@@ -1,4 +1,4 @@
-package testdemo
+package main
 
 import (
 	client2 "ABTest/apps/Micro/experiment/client"
@@ -17,14 +17,14 @@ func DoubleModule() {
 	userbClient := client1.NewUserbClient()
 	// 初始化ExperimentClient
 	experimentClient := client2.NewExperimentClient()
-
-	// 调用UserbClient的AddUser方法
+	// 调用UserbClient的GetUser方法
 	{
 		resp, err := userbClient.GetUserInfo(context.Background(), &pb_userb.GetUserInfoRequest{
 			UserInfo: &pb_userb.UserInfo{
 				UserId: proto.Uint64(1),
 			},
 		})
+
 		if err != nil {
 			panic(err)
 		}
@@ -32,12 +32,17 @@ func DoubleModule() {
 	}
 	// 调用ExperimentClient的AddExperiment方法
 	{
+
 		resp, err := experimentClient.GetExperiment(context.Background(), &pb_experiment.GetExperimentRequest{
 			ExperimentId: "1",
 		})
+
 		if err != nil {
 			panic(err)
 		}
 		fmt.Printf("TestDemo: get experiment %s\n", resp.String())
 	}
+}
+func main() {
+	DoubleModule()
 }
