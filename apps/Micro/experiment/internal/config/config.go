@@ -17,8 +17,9 @@ type Config struct {
 	ID   int    `yaml:"server_id"`
 	Log  string `yaml:"log"`
 
-	Grpc *conf.Grpc `yaml:"grpc_server"`
-	Etcd *conf.Etcd `yaml:"etcd"`
+	Grpc  *conf.Grpc  `yaml:"grpc_server"`
+	Etcd  *conf.Etcd  `yaml:"etcd"`
+	Mysql *conf.Mysql `yaml:"mysql"`
 }
 
 var (

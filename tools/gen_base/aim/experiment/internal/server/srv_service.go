@@ -17,3 +17,23 @@ func (s *experimentServer) GetExperiment(ctx context.Context, req *pb.GetExperim
 }
 
 	
+func (s *experimentServer) DeleteExperiment(ctx context.Context, req *pb.DeleteExperimentRequest) (resp *pb.DeleteExperimentResponse, err error) {
+	return s.experimentService.DeleteExperiment(ctx, req)
+}
+
+	
+func (s *experimentServer) UpdateExperimentBaseInfo(ctx context.Context, req *pb.UpdateExperimentBaseInfoRequest) (resp *pb.UpdateExperimentBaseInfoResponse, err error) {
+	return s.experimentService.UpdateExperimentBaseInfo(ctx, req)
+}
+
+	
+func (s *experimentServer) AddExperimentGroup(ctx context.Context, req *pb.AddExperimentGroupRequest) (resp *pb.AddExperimentGroupResponse, err error) {
+	return s.experimentService.AddExperimentGroup(ctx, req)
+}
+
+	
+func (s *experimentServer) DeleteExperimentGroup(ctx context.Context, req *pb.DeleteExperimentGroupRequest) (resp *pb.DeleteExperimentGroupResponse, err error) {
+	return s.experimentService.DeleteExperimentGroup(ctx, req)
+}
+
+	

@@ -24,7 +24,8 @@ func (table *UserbBasic) UpdateUserb(db *gorm.DB) error {
 	if table.UserID == 0 {
 		return errUserIDRequired
 	}
-	return db.Save(table).Error
+	// 部分非空字段更新
+	return db.Model(table).Updates(table).Error
 }
 
 func (table *UserbBasic) DeleteUserb(db *gorm.DB) error {

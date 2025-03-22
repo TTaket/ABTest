@@ -4,21 +4,35 @@ import (
 	client "ABTest/apps/Micro/experiment/client"
 	pb "ABTest/pkgs/proto/pb_experiment"
 	"context"
-	"fmt"
 )
 
 func main() {
 	experimentClient := client.NewExperimentClient()
-	// get experiment demo
 	{
-		req := &pb.GetExperimentRequest{
-			ExperimentId: "1",
-		}
-		resp, err := experimentClient.GetExperiment(context.Background(), req)
-		if err != nil {
-			// 用户视角 不能使用mylogger
-			fmt.Println(err)
-		}
-		fmt.Println("用户行为...", resp)
+		experimentClient.CreateExperiment(context.Background(),
+			&pb.CreateExperimentRequest{
+				ExperimentInfo: &pb.ExperimentInfo{
+					Name:        "experiment1",
+					Description: "experiment1 description",
+					Groups: []*pb.ExperimentGroup{
+						{
+							Name:                   "group1",
+							Description:            "group1 description",
+							Allocation:             0.5,
+							FromExperimentId:       0,
+							WhitelistUserpackageID: 0,
+						},
+						{
+							Name:                   "group2",
+							Description:            "group2 description",
+							Allocation:             0.5,
+							FromExperimentId:       0,
+							WhitelistUserpackageID: 0,
+						},
+					},
+					Status: pb.ExperimentStatus_EXPERIMENT_STATUS_READYING,
+				},
+			},
+		)
 	}
 }

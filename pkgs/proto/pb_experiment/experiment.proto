@@ -3,26 +3,126 @@ syntax = "proto3";
 package experiment;
 option go_package = "../pb_experiment/pb_experiment;pb_experiment";
 
+import "google/protobuf/timestamp.proto";
+
+// 定义实验结构
+//
+// 实验信息管理:
+//   - ID
+//   - 实验详细信息:
+//       - 名称
+//       - 描述
+//       - 创建时间
+//       - 最后修改时间
+//   - 分组信息:
+//       - 各个实验组:
+//           - 实验组ID
+//           - 名称
+//           - 描述
+//           - 实验组占实验比例
+//           - 白名单 (白名单是一个package id)
+//   - 实验状态
+
+message ExperimentGroup {
+  uint64 group_id = 1;
+  string name = 2;
+  string description = 3;
+  float allocation = 4; // 实验组占实验比例
+  uint64 from_experiment_id = 5; // 实验组来源实验ID
+  uint64 whitelist_userpackageID = 6; // 白名单
+}
+
+enum ExperimentStatus {
+  EXPERIMENT_STATUS_UNKNOWN   = 0; // 未知状态
+  EXPERIMENT_STATUS_READYING  = 1; // 准备状态
+  EXPERIMENT_STATUS_RUNNING   = 2; // 灰度中
+  EXPERIMENT_STATUS_STOPPED   = 3; // 停止状态
+  EXPERIMENT_STATUS_CLOSED    = 4; // 关闭状态
+  ExPERIMENT_STATUS_LAUNCHED  = 5; // launched状态
+}
+
+message ExperimentInfo {
+  uint64 experiment_id = 1;
+  string name = 2;
+  string description = 3;
+  repeated ExperimentGroup groups = 4;
+  ExperimentStatus status = 5;
+
+  google.protobuf.Timestamp create_time = 50;
+  google.protobuf.Timestamp update_time = 51;
+}
+
+// 查询实验 
 message GetExperimentRequest {
-  string experiment_id = 1;
+  uint64 experiment_id = 1;
 }
 
 message GetExperimentResponse {
-  string experiment_id = 1;
-  string name = 2;
-  string description = 3;
+  bool success = 1;
+  ExperimentInfo experiment_info = 2; 
+  string error = 100;
 }
 
+// 创建实验
 message CreateExperimentRequest {
-  string name = 1;
-  string description = 2;
+  ExperimentInfo experiment_info = 1;
 }
 
 message CreateExperimentResponse {
-  string experiment_id = 1;
+  bool success = 1;
+  uint64 experiment_id = 2;
+  ExperimentInfo experiment_info = 3; 
+  string error = 100;
+}
+
+
+// 删除实验
+message DeleteExperimentRequest {
+  uint64 experiment_id = 1;
+}
+
+message DeleteExperimentResponse {
+  bool success = 1;
+  string error = 100;
+}
+
+// 更新实验基本信息 (非实验组信息)
+message UpdateExperimentBaseInfoRequest {
+  ExperimentInfo experiment_info = 1;
+} 
+
+message UpdateExperimentBaseInfoResponse {
+  bool success = 1;
+  string error = 100;
+}
+
+// 更新实验组信息
+message AddExperimentGroupRequest {
+  uint64 experiment_id = 1;
+  ExperimentGroup group = 2;
+}
+
+message AddExperimentGroupResponse {
+  bool success = 1;
+  string error = 100;
+}
+
+// 删除实验组信息
+message DeleteExperimentGroupRequest {
+  uint64 experiment_id = 1;
+  uint64 group_id = 2;
+}
+
+message DeleteExperimentGroupResponse {
+  bool success = 1;
+  string error = 100;
 }
 
 service ExperimentService {
-  rpc GetExperiment(GetExperimentRequest) returns (GetExperimentResponse);
-  rpc CreateExperiment(CreateExperimentRequest) returns (CreateExperimentResponse);
+  rpc GetExperiment (GetExperimentRequest) returns (GetExperimentResponse) {}
+  rpc CreateExperiment (CreateExperimentRequest) returns (CreateExperimentResponse) {}
+  rpc DeleteExperiment (DeleteExperimentRequest) returns (DeleteExperimentResponse) {}
+  rpc UpdateExperimentBaseInfo (UpdateExperimentBaseInfoRequest) returns (UpdateExperimentBaseInfoResponse) {}
+  rpc AddExperimentGroup (AddExperimentGroupRequest) returns (AddExperimentGroupResponse) {}
+  rpc DeleteExperimentGroup (DeleteExperimentGroupRequest) returns (DeleteExperimentGroupResponse) {}
 }

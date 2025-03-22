@@ -3,6 +3,13 @@ syntax = "proto3";
 package userb;
 option go_package = "../pb_userb/pb_userb;pb_userb";
 
+// 用户类别
+enum  UserbType {
+  unkonwn = 0;// 未知
+  user = 1; // 单独用户
+  user_package = 2; // 用户包
+}
+
 // 用于管理实验的用户的个人信息
 message UserInfo {
   optional uint64 user_id = 1;
@@ -51,7 +58,8 @@ message BatchDeleteUserResponse {
 
 // 更新用户信息
 message UpdateUserRequest {
-  UserInfo user_info = 1;
+  uint64 user_id = 1;
+  UserInfo user_info = 2;
 }
 message UpdateUserResponse {
   bool success = 1;
@@ -59,7 +67,8 @@ message UpdateUserResponse {
 }
 // 批量
 message BatchUpdateUserRequest {
-  repeated UserInfo user_info = 1;
+  repeated uint64 user_id = 1;
+  repeated UserInfo user_info = 2;
 }
 message BatchUpdateUserResponse {
   bool success = 1;

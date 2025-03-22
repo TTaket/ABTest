@@ -26,7 +26,8 @@ alias docker_etcdctl_all="etcdctl --endpoints=${ETCD_ENDPOINTS} get --prefix '' 
 alias etcdctl_all="etcdctl  get --prefix '' "
 
 # mysql
-alias docker_mysql="mysql -h 127.0.0.1 -P 13306 -u root -p'abtest2025'"
+alias docker_mysql_userb="mysql -h 127.0.0.1 -P 13306 -u root -p'abtest2025'"
+alias docker_mysql_experiment="mysql -h 127.0.0.1 -P 13307 -u root -p'abtest2025'"
 
 # proto
 alias protoc_gen="sh ./scripts/genproto.sh"

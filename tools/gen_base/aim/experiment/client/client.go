@@ -15,6 +15,10 @@ import (
 type ExperimentClient interface {
 	CreateExperiment(ctx context.Context, in *pb.CreateExperimentRequest, opts ...grpc.CallOption) (*pb.CreateExperimentResponse, error)
 	GetExperiment(ctx context.Context, in *pb.GetExperimentRequest, opts ...grpc.CallOption) (*pb.GetExperimentResponse, error)
+	DeleteExperiment(ctx context.Context, in *pb.DeleteExperimentRequest, opts ...grpc.CallOption) (*pb.DeleteExperimentResponse, error)
+	UpdateExperimentBaseInfo(ctx context.Context, in *pb.UpdateExperimentBaseInfoRequest, opts ...grpc.CallOption) (*pb.UpdateExperimentBaseInfoResponse, error)
+	AddExperimentGroup(ctx context.Context, in *pb.AddExperimentGroupRequest, opts ...grpc.CallOption) (*pb.AddExperimentGroupResponse, error)
+	DeleteExperimentGroup(ctx context.Context, in *pb.DeleteExperimentGroupRequest, opts ...grpc.CallOption) (*pb.DeleteExperimentGroupResponse, error)
 	
 	Logger() *log.MyLogger
 }

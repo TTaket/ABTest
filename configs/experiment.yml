@@ -32,3 +32,13 @@ etcd:
   write_timeout: 5000
   dial_timeout: 5000
   balancing: round_robin
+mysql:
+  max_open_conns: 20
+  max_idle_conns: 10
+  max_lifetime: 120000
+  max_idle_time: 7200000
+  charset: utf8
+  address: "127.0.0.1:13307"
+  db: abtest_experiment
+  username: root
+  password: abtest2025

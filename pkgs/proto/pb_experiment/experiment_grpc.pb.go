@@ -19,8 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ExperimentService_GetExperiment_FullMethodName    = "/experiment.ExperimentService/GetExperiment"
-	ExperimentService_CreateExperiment_FullMethodName = "/experiment.ExperimentService/CreateExperiment"
+	ExperimentService_GetExperiment_FullMethodName            = "/experiment.ExperimentService/GetExperiment"
+	ExperimentService_CreateExperiment_FullMethodName         = "/experiment.ExperimentService/CreateExperiment"
+	ExperimentService_DeleteExperiment_FullMethodName         = "/experiment.ExperimentService/DeleteExperiment"
+	ExperimentService_UpdateExperimentBaseInfo_FullMethodName = "/experiment.ExperimentService/UpdateExperimentBaseInfo"
+	ExperimentService_AddExperimentGroup_FullMethodName       = "/experiment.ExperimentService/AddExperimentGroup"
+	ExperimentService_DeleteExperimentGroup_FullMethodName    = "/experiment.ExperimentService/DeleteExperimentGroup"
 )
 
 // ExperimentServiceClient is the client API for ExperimentService service.
@@ -29,6 +33,10 @@ const (
 type ExperimentServiceClient interface {
 	GetExperiment(ctx context.Context, in *GetExperimentRequest, opts ...grpc.CallOption) (*GetExperimentResponse, error)
 	CreateExperiment(ctx context.Context, in *CreateExperimentRequest, opts ...grpc.CallOption) (*CreateExperimentResponse, error)
+	DeleteExperiment(ctx context.Context, in *DeleteExperimentRequest, opts ...grpc.CallOption) (*DeleteExperimentResponse, error)
+	UpdateExperimentBaseInfo(ctx context.Context, in *UpdateExperimentBaseInfoRequest, opts ...grpc.CallOption) (*UpdateExperimentBaseInfoResponse, error)
+	AddExperimentGroup(ctx context.Context, in *AddExperimentGroupRequest, opts ...grpc.CallOption) (*AddExperimentGroupResponse, error)
+	DeleteExperimentGroup(ctx context.Context, in *DeleteExperimentGroupRequest, opts ...grpc.CallOption) (*DeleteExperimentGroupResponse, error)
 }
 
 type experimentServiceClient struct {
@@ -59,12 +67,56 @@ func (c *experimentServiceClient) CreateExperiment(ctx context.Context, in *Crea
 	return out, nil
 }
 
+func (c *experimentServiceClient) DeleteExperiment(ctx context.Context, in *DeleteExperimentRequest, opts ...grpc.CallOption) (*DeleteExperimentResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteExperimentResponse)
+	err := c.cc.Invoke(ctx, ExperimentService_DeleteExperiment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *experimentServiceClient) UpdateExperimentBaseInfo(ctx context.Context, in *UpdateExperimentBaseInfoRequest, opts ...grpc.CallOption) (*UpdateExperimentBaseInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateExperimentBaseInfoResponse)
+	err := c.cc.Invoke(ctx, ExperimentService_UpdateExperimentBaseInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *experimentServiceClient) AddExperimentGroup(ctx context.Context, in *AddExperimentGroupRequest, opts ...grpc.CallOption) (*AddExperimentGroupResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddExperimentGroupResponse)
+	err := c.cc.Invoke(ctx, ExperimentService_AddExperimentGroup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *experimentServiceClient) DeleteExperimentGroup(ctx context.Context, in *DeleteExperimentGroupRequest, opts ...grpc.CallOption) (*DeleteExperimentGroupResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteExperimentGroupResponse)
+	err := c.cc.Invoke(ctx, ExperimentService_DeleteExperimentGroup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ExperimentServiceServer is the server API for ExperimentService service.
 // All implementations must embed UnimplementedExperimentServiceServer
 // for forward compatibility.
 type ExperimentServiceServer interface {
 	GetExperiment(context.Context, *GetExperimentRequest) (*GetExperimentResponse, error)
 	CreateExperiment(context.Context, *CreateExperimentRequest) (*CreateExperimentResponse, error)
+	DeleteExperiment(context.Context, *DeleteExperimentRequest) (*DeleteExperimentResponse, error)
+	UpdateExperimentBaseInfo(context.Context, *UpdateExperimentBaseInfoRequest) (*UpdateExperimentBaseInfoResponse, error)
+	AddExperimentGroup(context.Context, *AddExperimentGroupRequest) (*AddExperimentGroupResponse, error)
+	DeleteExperimentGroup(context.Context, *DeleteExperimentGroupRequest) (*DeleteExperimentGroupResponse, error)
 	mustEmbedUnimplementedExperimentServiceServer()
 }
 
@@ -80,6 +132,18 @@ func (UnimplementedExperimentServiceServer) GetExperiment(context.Context, *GetE
 }
 func (UnimplementedExperimentServiceServer) CreateExperiment(context.Context, *CreateExperimentRequest) (*CreateExperimentResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateExperiment not implemented")
+}
+func (UnimplementedExperimentServiceServer) DeleteExperiment(context.Context, *DeleteExperimentRequest) (*DeleteExperimentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteExperiment not implemented")
+}
+func (UnimplementedExperimentServiceServer) UpdateExperimentBaseInfo(context.Context, *UpdateExperimentBaseInfoRequest) (*UpdateExperimentBaseInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateExperimentBaseInfo not implemented")
+}
+func (UnimplementedExperimentServiceServer) AddExperimentGroup(context.Context, *AddExperimentGroupRequest) (*AddExperimentGroupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddExperimentGroup not implemented")
+}
+func (UnimplementedExperimentServiceServer) DeleteExperimentGroup(context.Context, *DeleteExperimentGroupRequest) (*DeleteExperimentGroupResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteExperimentGroup not implemented")
 }
 func (UnimplementedExperimentServiceServer) mustEmbedUnimplementedExperimentServiceServer() {}
 func (UnimplementedExperimentServiceServer) testEmbeddedByValue()                           {}
@@ -138,6 +202,78 @@ func _ExperimentService_CreateExperiment_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ExperimentService_DeleteExperiment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteExperimentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExperimentServiceServer).DeleteExperiment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExperimentService_DeleteExperiment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExperimentServiceServer).DeleteExperiment(ctx, req.(*DeleteExperimentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExperimentService_UpdateExperimentBaseInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateExperimentBaseInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExperimentServiceServer).UpdateExperimentBaseInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExperimentService_UpdateExperimentBaseInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExperimentServiceServer).UpdateExperimentBaseInfo(ctx, req.(*UpdateExperimentBaseInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExperimentService_AddExperimentGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddExperimentGroupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExperimentServiceServer).AddExperimentGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExperimentService_AddExperimentGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExperimentServiceServer).AddExperimentGroup(ctx, req.(*AddExperimentGroupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ExperimentService_DeleteExperimentGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteExperimentGroupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExperimentServiceServer).DeleteExperimentGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ExperimentService_DeleteExperimentGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExperimentServiceServer).DeleteExperimentGroup(ctx, req.(*DeleteExperimentGroupRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ExperimentService_ServiceDesc is the grpc.ServiceDesc for ExperimentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +288,22 @@ var ExperimentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateExperiment",
 			Handler:    _ExperimentService_CreateExperiment_Handler,
+		},
+		{
+			MethodName: "DeleteExperiment",
+			Handler:    _ExperimentService_DeleteExperiment_Handler,
+		},
+		{
+			MethodName: "UpdateExperimentBaseInfo",
+			Handler:    _ExperimentService_UpdateExperimentBaseInfo_Handler,
+		},
+		{
+			MethodName: "AddExperimentGroup",
+			Handler:    _ExperimentService_AddExperimentGroup_Handler,
+		},
+		{
+			MethodName: "DeleteExperimentGroup",
+			Handler:    _ExperimentService_DeleteExperimentGroup_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

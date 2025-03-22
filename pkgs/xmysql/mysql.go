@@ -49,6 +49,9 @@ func NewMysqlClient(cfg *conf.Mysql) *MysqlClient {
 }
 
 func GetDB() *gorm.DB {
+	if cli == nil {
+		return nil
+	}
 	if cli.db == nil {
 		var (
 			err error

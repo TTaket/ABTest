@@ -7,9 +7,9 @@ CREATE TABLE `userb` (
     `address` varchar(128) COMMENT '地址',
     `company` varchar(128) COMMENT '公司',
     `otherjson` varchar(128) COMMENT '其他json',
-    `created_at` TIMESTAMP(3) ,
-    `updated_at` TIMESTAMP(3) ,
-    `deleted_at` TIMESTAMP(3) ,
+    `created_at` TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3),
+    `updated_at` TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),,
+    `deleted_at` TIMESTAMP(3) NULL,
     PRIMARY KEY (`user_id`)
     Index idx_userb_deleted_at (deleted_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

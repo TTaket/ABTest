@@ -4,11 +4,14 @@ import (
 	dig "ABTest/apps/Micro/experiment/dig"
 	conf "ABTest/apps/Micro/experiment/internal/config"
 	commands "ABTest/pkgs/commands"
+	"ABTest/pkgs/xmysql"
 )
 
 const serverName = conf.ServerName
 
 func init() {
+	conf := conf.GetConfig()
+	xmysql.NewMysqlClient(conf.Mysql)
 }
 
 func main() {

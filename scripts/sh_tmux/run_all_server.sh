@@ -19,6 +19,7 @@ for server in "${all_server[@]}"; do
 done
 tmux select-pane -t 1
 tmux kill-pane
+tmux select-layout even-horizontal
 tmux select-pane -D
 
 # control
@@ -27,11 +28,17 @@ tmux send-keys "docker_etcdctl_all" C-m
 
 tmux split-window -h
 tmux send-keys "source ./scripts/alias.sh" C-m
-tmux send-keys "docker_mysql" C-m
+tmux send-keys "docker_mysql_userb" C-m
+
+tmux split-window -h
+tmux send-keys "source ./scripts/alias.sh" C-m
+tmux send-keys "docker_mysql_experiment" C-m
+
 
 tmux split-window -h
 tmux send-keys "source ./scripts/alias.sh" C-m
 tmux send-keys "cd_log" C-m
+tmux select-layout even-horizontal
 
 
 

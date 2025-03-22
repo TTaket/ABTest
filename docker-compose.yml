@@ -42,6 +42,36 @@ services:
         '--collation-server=utf8mb4_unicode_ci',
         '--default-time-zone=+8:00'
     ]
+  abtest-mysql-experiment:
+    image: mysql:8.0.29
+    container_name: abtest-mysql-experiment
+    restart: always
+    ports:
+      - 13307:3306
+    networks:
+      abtest-network:
+        ipv4_address: "192.168.10.21"
+    volumes:
+      # init sql
+      - ./configs/docker/mysql/experiment:/docker-entrypoint-initdb.d
+      - /Volumes/data/abtest/mysql/experiment/data:/var/lib/mysql
+      #- /Volumes/data/abtest/mysql/experiment/conf:/etc/mysql
+      - /Volumes/data/abtest/mysql/experiment/mysql-files:/var/lib/mysql-files
+      - /Volumes/data/abtest/mysql/experiment/log:/var/log/mysql
+    privileged: true
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: abtest2025
+      MYSQL_USER: abtest
+      MYSQL_PASSWORD: abtest2025
+      ALLOW_HOST: "%"
+      MYSQL_DATABASE: abtest_experiment
+      LANG: en_US.UTF-8
+    command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+8:00'
+    ]
   abtest-jaeger:
     image: jaegertracing/all-in-one:1.37
     container_name: abtest-jaeger

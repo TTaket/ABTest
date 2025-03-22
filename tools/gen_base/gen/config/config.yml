@@ -14,3 +14,19 @@ func:
     value: getexperiment #Function_02（小写）# example:getexperiment
   - key: "%004"
     value: GetExperiment #Function_02（大写） # example:GetExperiment
+  - key: "%005"
+    value: deleteexperiment #Function_03（小写） # example:deleteexperiment
+  - key: "%006"
+    value: DeleteExperiment #Function_03（大写） # example:DeleteExperiment
+  - key: "%007"
+    value: updateexperimentbaseinfo #Function_04（小写） # example:updateexperimentbaseinfo
+  - key: "%008"
+    value: UpdateExperimentBaseInfo #Function_04（大写） # example:UpdateExperimentBaseInfo
+  - key: "%009"
+    value: addexperimentgroup #Function_05（小写） # example:addexperimentgroup
+  - key: "%010"
+    value: AddExperimentGroup #Function_05（大写） # example:AddExperimentGroup
+  - key: "%011"
+    value: deleteexperimentgroup #Function_06（小写） # example:deleteexperimentgroup
+  - key: "%012"
+    value: DeleteExperimentGroup #Function_06（大写） # example:DeleteExperimentGroup

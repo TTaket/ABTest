@@ -158,7 +158,7 @@ func gen_service() error {
 	}
 	{
 		for i := 1; i < len(Config.FuncInfo); i += 2 {
-			BaseInfo := `%002(ctx context.Context, in *pb.%002Request, opts ...grpc.CallOption) (*pb.%002Response, error)`
+			BaseInfo := `%002(ctx context.Context, in *pb.%002Request) (*pb.%002Response, error)`
 			ChangeInfo := strings.ReplaceAll(BaseInfo, "%002", Config.FuncInfo[i].Value)
 			specialToken.After += ChangeInfo + "\n\t"
 		}
