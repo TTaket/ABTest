@@ -24,5 +24,5 @@ func (table *ExperimentInfoBasic) TableName() string {
 }
 
 func (table *ExperimentInfoBasic) String() string {
-	return "experiment_id: " + fmt.Sprint(table.ExperimentID) + ", name: " + table.Name + ", description: " + table.Description + ", status: " + fmt.Sprint(table.Status)
+	return fmt.Sprintf("ExperimentInfoBasic{ExperimentID: %d, Name: %s, Description: %s, Status: %d, CreatedAt: %s, UpdatedAt: %s, DeletedAt: %s}", table.ExperimentID, table.Name, table.Description, table.Status, table.CreatedAt.Format("2006-01-02 15:04:05"), table.UpdatedAt.Format("2006-01-02 15:04:05"), table.DeletedAt.Time.Format("2006-01-02 15:04:05"))
 }

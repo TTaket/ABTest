@@ -3,7 +3,6 @@ syntax = "proto3";
 package experiment;
 option go_package = "../pb_experiment/pb_experiment;pb_experiment";
 
-import "google/protobuf/timestamp.proto";
 
 // 定义实验结构
 //
@@ -48,8 +47,8 @@ message ExperimentInfo {
   repeated ExperimentGroup groups = 4;
   ExperimentStatus status = 5;
 
-  google.protobuf.Timestamp create_time = 50;
-  google.protobuf.Timestamp update_time = 51;
+  string create_time = 50;
+  string update_time = 51;
 }
 
 // 查询实验 

@@ -27,5 +27,5 @@ func (table *UserbBasic) TableName() string {
 }
 
 func (table *UserbBasic) String() string {
-	return "user_id: " + fmt.Sprint(table.UserID) + ", name: " + table.Name + ", email: " + table.Email + ", phone: " + table.Phone + ", address: " + table.Address + ", company: " + table.Company + ", otherjson: " + table.Otherjson
+	return fmt.Sprintf("UserbBasic{UserID: %d, Name: %s, Email: %s, Phone: %s, Address: %s, Company: %s, Otherjson: %s, CreatedAt: %s, UpdatedAt: %s, DeletedAt: %s}", table.UserID, table.Name, table.Email, table.Phone, table.Address, table.Company, table.Otherjson, table.CreatedAt.Format("2006-01-02 15:04:05"), table.UpdatedAt.Format("2006-01-02 15:04:05"), table.DeletedAt.Time.Format("2006-01-02 15:04:05"))
 }

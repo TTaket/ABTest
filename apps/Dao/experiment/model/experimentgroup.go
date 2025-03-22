@@ -25,5 +25,5 @@ func (table *ExperimentGroupBasic) TableName() string {
 }
 
 func (table *ExperimentGroupBasic) String() string {
-	return "group_id: " + fmt.Sprint(table.GroupID) + ", name: " + table.Name + ", description: " + table.Description + ", allocation: " + fmt.Sprint(table.Allocation) + ", from_experiment_id: " + fmt.Sprint(table.FromExperimentID)
+	return fmt.Sprintf("ExperimentGroupBasic{GroupID: %d, Name: %s, Description: %s, Allocation: %f, FromExperimentID: %d, WhiteListUserPackageId: %d, CreatedAt: %s, UpdatedAt: %s, DeletedAt: %s}", table.GroupID, table.Name, table.Description, table.Allocation, table.FromExperimentID, table.WhiteListUserPackageId, table.CreatedAt.Format("2006-01-02 15:04:05"), table.UpdatedAt.Format("2006-01-02 15:04:05"), table.DeletedAt.Time.Format("2006-01-02 15:04:05"))
 }

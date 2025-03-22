@@ -3,8 +3,6 @@ package utils
 import (
 	model "ABTest/apps/Dao/experiment/model"
 	pb "ABTest/pkgs/proto/pb_experiment"
-
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 /*
@@ -46,8 +44,8 @@ func TranslateExperimentModelToProtoExperimentInfo(experimentInfo model.Experime
 		Name:         experimentInfo.Name,
 		Description:  experimentInfo.Description,
 		Groups:       groups,
-		CreateTime:   timestamppb.New(experimentInfo.CreatedAt),
-		UpdateTime:   timestamppb.New(experimentInfo.UpdatedAt),
+		CreateTime:   experimentInfo.CreatedAt.String(),
+		UpdateTime:   experimentInfo.UpdatedAt.String(),
 	}
 }
 

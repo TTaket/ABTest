@@ -40,8 +40,9 @@ func (s *experimentService) CreateExperiment(ctx context.Context, req *pb.Create
 	create_group_err := false
 	create_group_err_msg := []string{}
 	// 4. 创建实验组
-	for _, group := range groupsbasic {
-		err = group.CreateExperimentGroup(db)
+	for i := range groupsbasic {
+		groupPtr := &groupsbasic[i]
+		err = groupPtr.CreateExperimentGroup(db)
 		if err != nil {
 			create_group_err = true
 			create_group_err_msg = append(create_group_err_msg, err.Error())
