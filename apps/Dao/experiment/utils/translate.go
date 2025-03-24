@@ -68,3 +68,26 @@ func TranslateProtoExperimentInfoToExperimentModel(experimentInfo *pb.Experiment
 		Status:       int(experimentInfo.Status),
 	}, groups
 }
+
+// group
+func TranslateExperimentGroupModelToProtoExperimentGroup(group model.ExperimentGroupBasic) *pb.ExperimentGroup {
+	return &pb.ExperimentGroup{
+		GroupId:                group.GroupID,
+		Name:                   group.Name,
+		Description:            group.Description,
+		Allocation:             group.Allocation,
+		FromExperimentId:       group.FromExperimentID,
+		WhitelistUserpackageID: group.WhiteListUserPackageId,
+	}
+}
+
+func TranslateProtoExperimentGroupToExperimentModel(group *pb.ExperimentGroup) model.ExperimentGroupBasic {
+	return model.ExperimentGroupBasic{
+		GroupID:                group.GroupId,
+		Name:                   group.Name,
+		Description:            group.Description,
+		Allocation:             group.Allocation,
+		FromExperimentID:       group.FromExperimentId,
+		WhiteListUserPackageId: group.WhitelistUserpackageID,
+	}
+}

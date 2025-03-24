@@ -23,7 +23,7 @@ type Config struct {
 
 var (
 	confFile = flag.String("%3_confpos", "./configs/%1.yml", "The configuration file path")
-	grpcPort = flag.Int("%3_port", 50051, "The server port")
+	grpcPort = flag.Int("%3_port", %6, "The server port")
 	serverID = flag.Int("%3_id", 1, "The server id")
 )
 var (

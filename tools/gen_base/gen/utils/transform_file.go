@@ -31,6 +31,7 @@ func init() {
 }
 
 // TransformFile reads a yaml file and transforms it into a string
+// 会默认加入所有的%num
 func TransformFile(context string, tokens []Token) (string, error) {
 	// read yaml file
 	var ConfigList Config
@@ -46,6 +47,7 @@ func TransformFile(context string, tokens []Token) (string, error) {
 	token = append(token, Token{Before: "%3", After: ConfigList.BaseInfo.ModuleNameSmall})
 	token = append(token, Token{Before: "%4", After: ConfigList.BaseInfo.RPCServiceName})
 	token = append(token, Token{Before: "%5", After: ConfigList.BaseInfo.RPCServiceClient})
+	token = append(token, Token{Before: "%6", After: ConfigList.BaseInfo.Port})
 
 	for _, v := range ConfigList.FuncInfo {
 		token = append(token, Token{Before: v.Key, After: v.Value})

@@ -4,6 +4,7 @@ base:
   modulename_sma: experiment #modulename(小写) # example:experiment
   rpcservicename: ExperimentService #rpc 服务名称（最底下的service） # example:ExperimentService
   rpcserviceclient: NewExperimentServiceClient #New rpc Service Client  # example:NewExperimentServiceClient
+  port: 50051 #rpc port
 
 func:
   - key: "%001"

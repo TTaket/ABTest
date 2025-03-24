@@ -12,6 +12,7 @@ type Base struct {
 	ModuleNameSmall  string `yaml:"modulename_sma"`
 	RPCServiceName   string `yaml:"rpcservicename"`
 	RPCServiceClient string `yaml:"rpcserviceclient"`
+	Port             string `yaml:"port"`
 }
 
 type Function struct {

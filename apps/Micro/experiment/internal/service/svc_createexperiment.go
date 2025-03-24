@@ -22,7 +22,7 @@ func (s *experimentService) CreateExperiment(ctx context.Context, req *pb.Create
 	if db == nil {
 		conf.Log.Errorf("CreateExperiment get db failed")
 		resp.Error = "get db failed"
-		return nil, err
+		return resp, mysql.ERR_GetDB_FAILED
 	}
 
 	// 2. 解析请求参数
@@ -34,7 +34,7 @@ func (s *experimentService) CreateExperiment(ctx context.Context, req *pb.Create
 	if err != nil {
 		conf.Log.Errorf("CreateExperimentInfo failed: %v", err)
 		resp.Error = err.Error()
-		return nil, err
+		return resp, err
 	}
 
 	create_group_err := false
