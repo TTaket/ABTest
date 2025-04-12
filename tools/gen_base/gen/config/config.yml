@@ -1,0 +1,29 @@
+base:
+  modulename: layer #modulename # example:experiment
+  modulename_big: Layer #modulename(大写) # example:Experiment
+  modulename_sma: layer #modulename(小写) # example:experiment
+  rpcservicename: LayerService #rpc 服务名称（最底下的service） # example:ExperimentService
+  rpcserviceclient: NewLayerServiceClient #New rpc Service Client  # example:NewExperimentServiceClient
+  port: 50053 #rpc port
+
+func:
+  - key: "%001"
+    value: createlayer #Function_01（小写） # example:createuser
+  - key: "%002"
+    value: CreateLayer #Function_01（大写） # example:CreateUser
+  - key: "%003"
+    value: getlayer #Function_02（小写）# example:batchadduser
+  - key: "%004"
+    value: GetLayer #Function_02（大写） # example:BatchAddUser
+  - key: "%005"
+    value: updatelayer #Function_03（小写） # example:deleteuser
+  - key: "%006"
+    value: UpdateLayer #Function_03（大写） # example:DeleteUser
+  - key: "%007"
+    value: deletelayer #Function_04（小写） # example:batchdeleteuser
+  - key: "%008"
+    value: DeleteLayer #Function_04（大写） # example:BatchDeleteUser
+  - key: "%009"
+    value: listlayers #Function_05（小写） # example:updateuser
+  - key: "%010"
+    value: ListLayers #Function_05（大写） # example:UpdateUser
