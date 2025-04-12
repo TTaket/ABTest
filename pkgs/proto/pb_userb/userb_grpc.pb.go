@@ -27,6 +27,7 @@ const (
 	UserbService_BatchUpdateUser_FullMethodName  = "/userb.UserbService/BatchUpdateUser"
 	UserbService_GetUserInfo_FullMethodName      = "/userb.UserbService/GetUserInfo"
 	UserbService_BatchGetUserInfo_FullMethodName = "/userb.UserbService/BatchGetUserInfo"
+	UserbService_ScatterTraffic_FullMethodName   = "/userb.UserbService/ScatterTraffic"
 )
 
 // UserbServiceClient is the client API for UserbService service.
@@ -41,6 +42,7 @@ type UserbServiceClient interface {
 	BatchUpdateUser(ctx context.Context, in *BatchUpdateUserRequest, opts ...grpc.CallOption) (*BatchUpdateUserResponse, error)
 	GetUserInfo(ctx context.Context, in *GetUserInfoRequest, opts ...grpc.CallOption) (*GetUserInfoResponse, error)
 	BatchGetUserInfo(ctx context.Context, in *BatchGetUserInfoRequest, opts ...grpc.CallOption) (*BatchGetUserInfoResponse, error)
+	ScatterTraffic(ctx context.Context, in *ScatterTrafficRequest, opts ...grpc.CallOption) (*ScatterTrafficResponse, error)
 }
 
 type userbServiceClient struct {
@@ -131,6 +133,16 @@ func (c *userbServiceClient) BatchGetUserInfo(ctx context.Context, in *BatchGetU
 	return out, nil
 }
 
+func (c *userbServiceClient) ScatterTraffic(ctx context.Context, in *ScatterTrafficRequest, opts ...grpc.CallOption) (*ScatterTrafficResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ScatterTrafficResponse)
+	err := c.cc.Invoke(ctx, UserbService_ScatterTraffic_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserbServiceServer is the server API for UserbService service.
 // All implementations must embed UnimplementedUserbServiceServer
 // for forward compatibility.
@@ -143,6 +155,7 @@ type UserbServiceServer interface {
 	BatchUpdateUser(context.Context, *BatchUpdateUserRequest) (*BatchUpdateUserResponse, error)
 	GetUserInfo(context.Context, *GetUserInfoRequest) (*GetUserInfoResponse, error)
 	BatchGetUserInfo(context.Context, *BatchGetUserInfoRequest) (*BatchGetUserInfoResponse, error)
+	ScatterTraffic(context.Context, *ScatterTrafficRequest) (*ScatterTrafficResponse, error)
 	mustEmbedUnimplementedUserbServiceServer()
 }
 
@@ -176,6 +189,9 @@ func (UnimplementedUserbServiceServer) GetUserInfo(context.Context, *GetUserInfo
 }
 func (UnimplementedUserbServiceServer) BatchGetUserInfo(context.Context, *BatchGetUserInfoRequest) (*BatchGetUserInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method BatchGetUserInfo not implemented")
+}
+func (UnimplementedUserbServiceServer) ScatterTraffic(context.Context, *ScatterTrafficRequest) (*ScatterTrafficResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ScatterTraffic not implemented")
 }
 func (UnimplementedUserbServiceServer) mustEmbedUnimplementedUserbServiceServer() {}
 func (UnimplementedUserbServiceServer) testEmbeddedByValue()                      {}
@@ -342,6 +358,24 @@ func _UserbService_BatchGetUserInfo_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserbService_ScatterTraffic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ScatterTrafficRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserbServiceServer).ScatterTraffic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserbService_ScatterTraffic_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserbServiceServer).ScatterTraffic(ctx, req.(*ScatterTrafficRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserbService_ServiceDesc is the grpc.ServiceDesc for UserbService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -380,6 +414,10 @@ var UserbService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "BatchGetUserInfo",
 			Handler:    _UserbService_BatchGetUserInfo_Handler,
+		},
+		{
+			MethodName: "ScatterTraffic",
+			Handler:    _UserbService_ScatterTraffic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

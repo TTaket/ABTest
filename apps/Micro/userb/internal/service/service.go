@@ -16,9 +16,11 @@ type UserbService interface {
 	BatchUpdateUser(ctx context.Context, in *pb.BatchUpdateUserRequest) (*pb.BatchUpdateUserResponse, error)
 	GetUserInfo(ctx context.Context, in *pb.GetUserInfoRequest) (*pb.GetUserInfoResponse, error)
 	BatchGetUserInfo(ctx context.Context, in *pb.BatchGetUserInfoRequest) (*pb.BatchGetUserInfoResponse, error)
+	ScatterTraffic(ctx context.Context, in *pb.ScatterTrafficRequest) (*pb.ScatterTrafficResponse, error)
 }
 
 type userbService struct {
+
 	// others..
 }
 

@@ -1,0 +1,44 @@
+name: ·ic
+description: "manages dynamic info"
+server_id: 1
+log: "./configs/logger/dynamic.yml"
+grpc_server:
+  name: ABTest_dynamic_server
+  server_id: 1
+  port: 6700
+  max_connection_idle: 0
+  max_connection_age: 0
+  max_connection_age_grace: 0
+  time: 7200000
+  timeout: 20000
+  connection_limit: 2000
+  streams_limit: 2000
+  max_recv_msg_size: 4096
+  jaeger:
+    host_port: "127.0.0.1:6831"
+    sampler_type: "const"
+    param: 1
+    log_spans: true
+    buffer_flush_interval: 1
+    max_packet_size: 0
+    enabled: true
+    log_path: "/var/log/ABTest/Jaeger/"
+etcd:
+  endpoints: ["127.0.0.1:12379"]
+  username:
+  password:
+  schema: abtest
+  read_timeout: 5000
+  write_timeout: 5000
+  dial_timeout: 5000
+  balancing: round_robin
+mysql:
+  max_open_conns: 20
+  max_idle_conns: 10
+  max_lifetime: 120000
+  max_idle_time: 7200000
+  charset: utf8
+  address: "127.0.0.1:13309"
+  db: abtest_dynamic
+  username: root
+  password: abtest2025

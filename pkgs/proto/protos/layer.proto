@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package layer;
+
+option go_package = "../pb_layer/pb_layer;pb_layer";
+
+// 层域类型枚举
+enum LayerType {
+  LAYER = 0;  // 层
+  DOMAIN = 1; // 域
+}
+
+// 层域信息
+message Layer {
+  string id = 1;           // 层域ID
+  LayerType type = 2;       // 类型（层或域）
+  string name = 3;          // 名称
+  string description = 4;   // 描述
+  string parent_id = 5;     // 父级ID
+  float ratio = 6;          // 占有父级比例
+  int64 created_at = 7;     // 创建时间 (Unix时间戳)
+  int64 updated_at = 8;     // 更新时间 (Unix时间戳)
+}
+
+// 创建层域请求
+message CreateLayerRequest {
+  Layer layer = 1;
+}
+
+// 创建层域响应
+message CreateLayerResponse {
+  Layer layer = 1;
+}
+
+// 获取层域请求
+message GetLayerRequest {
+  string id = 1;
+}
+
+// 获取层域响应
+message GetLayerResponse {
+  Layer layer = 1;
+}
+
+// 更新层域请求
+message UpdateLayerRequest {
+  Layer layer = 1;
+}
+
+// 更新层域响应
+message UpdateLayerResponse {
+  Layer layer = 1;
+}
+
+// 删除层域请求
+message DeleteLayerRequest {
+  string id = 1;
+}
+
+// 删除层域响应
+message DeleteLayerResponse {
+  bool success = 1;
+}
+
+// 列出层域请求
+message ListLayersRequest {
+  LayerType type = 1;  // 可选，按类型筛选
+  string parent_id = 2; // 可选，按父级ID筛选
+  int32 page = 3;
+  int32 page_size = 4;
+}
+
+// 列出层域响应
+message ListLayersResponse {
+  repeated Layer layers = 1;
+  int32 total = 2;
+}
+
+// 层域服务
+service LayerService {
+  // 创建层域
+  rpc CreateLayer(CreateLayerRequest) returns (CreateLayerResponse);
+  // 获取层域
+  rpc GetLayer(GetLayerRequest) returns (GetLayerResponse);
+  // 更新层域
+  rpc UpdateLayer(UpdateLayerRequest) returns (UpdateLayerResponse);
+  // 删除层域
+  rpc DeleteLayer(DeleteLayerRequest) returns (DeleteLayerResponse);
+  // 列出层域
+  rpc ListLayers(ListLayersRequest) returns (ListLayersResponse);
+}

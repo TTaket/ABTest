@@ -72,6 +72,66 @@ services:
         '--collation-server=utf8mb4_unicode_ci',
         '--default-time-zone=+8:00'
     ]
+  abtest-mysql-layer:
+    image: mysql:8.0.29
+    container_name: abtest-mysql-layer
+    restart: always
+    ports:
+      - 13308:3306
+    networks:
+      abtest-network:
+        ipv4_address: "192.168.10.22"
+    volumes:
+      # init sql
+      - ./configs/docker/mysql/layer:/docker-entrypoint-initdb.d
+      - /Volumes/data/abtest/mysql/layer/data:/var/lib/mysql
+      #- /Volumes/data/abtest/mysql/layer/conf:/etc/mysql
+      - /Volumes/data/abtest/mysql/layer/mysql-files:/var/lib/mysql-files
+      - /Volumes/data/abtest/mysql/layer/log:/var/log/mysql
+    privileged: true
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: abtest2025
+      MYSQL_USER: abtest
+      MYSQL_PASSWORD: abtest2025
+      ALLOW_HOST: "%"
+      MYSQL_DATABASE: abtest_layer
+      LANG: en_US.UTF-8
+    command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+8:00'
+    ]
+  abtest-mysql-dynamic:
+    image: mysql:8.0.29
+    container_name: abtest-mysql-dynamic
+    restart: always
+    ports:
+      - 13309:3306
+    networks:
+      abtest-network:
+        ipv4_address: "192.168.10.23"
+    volumes:
+      # init sql
+      - ./configs/docker/mysql/dynamic:/docker-entrypoint-initdb.d
+      - /Volumes/data/abtest/mysql/dynamic/data:/var/lib/mysql
+      #- /Volumes/data/abtest/mysql/dynamic/conf:/etc/mysql
+      - /Volumes/data/abtest/mysql/dynamic/mysql-files:/var/lib/mysql-files
+      - /Volumes/data/abtest/mysql/dynamic/log:/var/log/mysql
+    privileged: true
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: abtest2025
+      MYSQL_USER: abtest
+      MYSQL_PASSWORD: abtest2025
+      ALLOW_HOST: "%"
+      MYSQL_DATABASE: abtest_dynamic
+      LANG: en_US.UTF-8
+    command: [
+        '--character-set-server=utf8mb4',
+        '--collation-server=utf8mb4_unicode_ci',
+        '--default-time-zone=+8:00'
+    ]
   abtest-jaeger:
     image: jaegertracing/all-in-one:1.37
     container_name: abtest-jaeger

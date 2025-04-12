@@ -10,89 +10,19 @@ import (
 )
 
 func main() {
-	UserbClient := client.NewUserbClient()
+	userbClient := client.NewUserbClient()
 	{
-		// 请求体
-		req := &pb.AddUserRequest{
+		// 编写测试样例
+		resp, err := userbClient.GetUserInfo(context.Background(), &pb.GetUserInfoRequest{
 			UserInfo: &pb.UserInfo{
-				Name: proto.String("test"),
+				UserId: proto.Uint64(1),
 			},
-		}
-		// 调用函数
-		resp, err := UserbClient.AddUser(context.Background(), req)
+		})
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(resp.String())
-	}
-	{
-		// 请求体
-		req := &pb.AddUserRequest{
-			UserInfo: &pb.UserInfo{
-				Name: proto.String("test"),
-			},
+		if resp == nil {
+			fmt.Printf("%v", resp)
 		}
-		// 调用函数
-		resp, err := UserbClient.AddUser(context.Background(), req)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(resp.String())
-	}
-	{
-		// 请求体
-		req := &pb.AddUserRequest{
-			UserInfo: &pb.UserInfo{
-				Name: proto.String("test"),
-			},
-		}
-		// 调用函数
-		resp, err := UserbClient.AddUser(context.Background(), req)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(resp.String())
-	}
-	{
-		// 请求体
-		req := &pb.AddUserRequest{
-			UserInfo: &pb.UserInfo{
-				Name: proto.String("test"),
-			},
-		}
-		// 调用函数
-		resp, err := UserbClient.AddUser(context.Background(), req)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(resp.String())
-	}
-	{
-		// 请求体
-		req := &pb.AddUserRequest{
-			UserInfo: &pb.UserInfo{
-				Name: proto.String("test"),
-			},
-		}
-		// 调用函数
-		resp, err := UserbClient.AddUser(context.Background(), req)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(resp.String())
-	}
-	{
-		// 请求体
-		req := &pb.AddUserRequest{
-			UserInfo: &pb.UserInfo{
-				Name: proto.String("test"),
-			},
-		}
-		// 调用函数
-		resp, err := UserbClient.AddUser(context.Background(), req)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(resp.String())
 	}
 }

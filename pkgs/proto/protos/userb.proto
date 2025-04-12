@@ -20,6 +20,25 @@ message UserInfo {
   optional string company = 6;
   optional string otherjson = 500;
 }
+
+// 子用户包
+message SonInfo {
+  optional uint64 son_id = 1;
+  optional float percent = 2;
+}
+
+// 用户包
+message UserPackage {
+  optional uint64 userpackage_id = 1;
+  optional string name = 2;
+  optional string description = 3;
+  repeated uint64 user_list = 4;
+  optional int32 linknum = 5;
+  optional uint64 from = 6;
+  repeated SonInfo son_list = 7; 
+  optional int64 create_time = 8;
+}
+
 // 增加用户
 message AddUserRequest {
   UserInfo user_info = 1;
@@ -95,6 +114,67 @@ message BatchGetUserInfoResponse {
   repeated string errors = 100;
 }
 
+
+// 用户包的功能
+// 创建一个完全新的用户包
+message CreateUserPackageRequest {
+  UserPackage user_package = 1;
+}
+message CreateUserPackageResponse {
+  bool success = 1;
+  uint64 userpackage_id = 2;
+  string error = 100;
+}
+
+// 删除用户包
+message DeleteUserPackageRequest {
+  uint64 userpackage_id = 1;
+}
+message DeleteUserPackageResponse {
+  bool success = 1;
+  string error = 100;
+}
+
+// 更新用户包
+message UpdateUserPackageRequest {
+  uint64 userpackage_id = 1 ;
+  UserPackage user_package = 2;
+}
+message UpdateUserPackageResponse {
+  bool success = 1;
+  string error = 100;
+}
+
+// 获取用户包
+message GetUserPackageRequest {
+  uint64 userpackage_id = 1;
+}
+message GetUserPackageResponse {
+  bool success = 1;
+  UserPackage user_package = 2;
+  string error = 100;
+}
+
+// 根据某一个用户包 增加用户 更改信息 
+message AddUserToUserPackageRequest {
+  uint64 userpackage_id = 1;
+  repeated uint64 user_id = 2;
+}
+message AddUserToUserPackageResponse {
+  bool success = 1;
+  string error = 100;
+}
+
+// 新增打散流量功能的消息
+message ScatterTrafficRequest {
+  uint64 userpackage_id = 1;
+}
+
+message ScatterTrafficResponse {
+  bool success = 1;
+  string error = 100;
+}
+
 service UserbService {
   rpc AddUser(AddUserRequest) returns (AddUserResponse) {}
   rpc BatchAddUser(BatchAddUserRequest) returns (BatchAddUserResponse) {}
@@ -104,6 +184,7 @@ service UserbService {
   rpc BatchUpdateUser(BatchUpdateUserRequest) returns (BatchUpdateUserResponse) {}
   rpc GetUserInfo(GetUserInfoRequest) returns (GetUserInfoResponse) {}
   rpc BatchGetUserInfo(BatchGetUserInfoRequest) returns (BatchGetUserInfoResponse) {}
+  rpc ScatterTraffic(ScatterTrafficRequest) returns (ScatterTrafficResponse) {}
 }
 
 

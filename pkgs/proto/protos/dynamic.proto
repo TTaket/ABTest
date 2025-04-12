@@ -1,0 +1,152 @@
+syntax = "proto3";
+
+package dynamic;
+
+option go_package = "../pb_dynamic/pb_dynamic;pb_dynamic";
+
+// 层与用户包绑定关系
+message LayerUserBinding {
+  string layer_id = 1;       // 层ID
+  string user_package_id = 2; // 用户包ID
+  int64 created_at = 3;      // 创建时间 (Unix时间戳)
+  int64 updated_at = 4;      // 更新时间 (Unix时间戳)
+}
+
+// 实验组与用户包绑定关系
+message ExperimentUserBinding {
+  string experiment_group_id = 1; // 实验组ID
+  string user_package_id = 2;    // 用户包ID
+  int64 created_at = 3;          // 创建时间 (Unix时间戳)
+  int64 updated_at = 4;          // 更新时间 (Unix时间戳)
+}
+
+// 实验与层绑定关系
+message ExperimentLayerBinding {
+  string experiment_id = 1; // 实验ID
+  string layer_id = 2;      // 层ID
+  float ratio = 3;          // 占有比例
+  int64 created_at = 4;     // 创建时间 (Unix时间戳)
+  int64 updated_at = 5;     // 更新时间 (Unix时间戳)
+}
+
+// 创建层用户绑定请求
+message CreateLayerUserBindingRequest {
+  LayerUserBinding binding = 1;
+}
+
+// 创建层用户绑定响应
+message CreateLayerUserBindingResponse {
+  LayerUserBinding binding = 1;
+}
+
+// 获取层用户绑定请求
+message GetLayerUserBindingRequest {
+  string layer_id = 1;
+}
+
+// 获取层用户绑定响应
+message GetLayerUserBindingResponse {
+  LayerUserBinding binding = 1;
+}
+
+// 删除层用户绑定请求
+message DeleteLayerUserBindingRequest {
+  string layer_id = 1;
+}
+
+// 删除层用户绑定响应
+message DeleteLayerUserBindingResponse {
+  bool success = 1;
+}
+
+// 创建实验用户绑定请求
+message CreateExperimentUserBindingRequest {
+  ExperimentUserBinding binding = 1;
+}
+
+// 创建实验用户绑定响应
+message CreateExperimentUserBindingResponse {
+  ExperimentUserBinding binding = 1;
+}
+
+// 获取实验用户绑定请求
+message GetExperimentUserBindingRequest {
+  string experiment_group_id = 1;
+}
+
+// 获取实验用户绑定响应
+message GetExperimentUserBindingResponse {
+  ExperimentUserBinding binding = 1;
+}
+
+// 删除实验用户绑定请求
+message DeleteExperimentUserBindingRequest {
+  string experiment_group_id = 1;
+}
+
+// 删除实验用户绑定响应
+message DeleteExperimentUserBindingResponse {
+  bool success = 1;
+}
+
+// 创建实验层绑定请求
+message CreateExperimentLayerBindingRequest {
+  ExperimentLayerBinding binding = 1;
+}
+
+// 创建实验层绑定响应
+message CreateExperimentLayerBindingResponse {
+  ExperimentLayerBinding binding = 1;
+}
+
+// 获取实验层绑定请求
+message GetExperimentLayerBindingRequest {
+  string experiment_id = 1;
+  string layer_id = 2;
+}
+
+// 获取实验层绑定响应
+message GetExperimentLayerBindingResponse {
+  ExperimentLayerBinding binding = 1;
+}
+
+// 获取层内实验列表请求
+message GetLayerExperimentsRequest {
+  string layer_id = 1;
+}
+
+// 获取层内实验列表响应
+message GetLayerExperimentsResponse {
+  repeated ExperimentLayerBinding bindings = 1;
+  float remaining_ratio = 2; // 剩余可用流量比例
+}
+
+// 删除实验层绑定请求
+message DeleteExperimentLayerBindingRequest {
+  string experiment_id = 1;
+  string layer_id = 2;
+}
+
+// 删除实验层绑定响应
+message DeleteExperimentLayerBindingResponse {
+  bool success = 1;
+}
+
+// 动态实验服务
+service DynamicService {
+  // 层用户绑定
+  rpc CreateLayerUserBinding(CreateLayerUserBindingRequest) returns (CreateLayerUserBindingResponse);
+  rpc GetLayerUserBinding(GetLayerUserBindingRequest) returns (GetLayerUserBindingResponse);
+  rpc DeleteLayerUserBinding(DeleteLayerUserBindingRequest) returns (DeleteLayerUserBindingResponse);
+  
+  // 实验用户绑定
+  rpc CreateExperimentUserBinding(CreateExperimentUserBindingRequest) returns (CreateExperimentUserBindingResponse);
+  rpc GetExperimentUserBinding(GetExperimentUserBindingRequest) returns (GetExperimentUserBindingResponse);
+  rpc DeleteExperimentUserBinding(DeleteExperimentUserBindingRequest) returns (DeleteExperimentUserBindingResponse);
+  
+  // 实验层绑定
+  rpc CreateExperimentLayerBinding(CreateExperimentLayerBindingRequest) returns (CreateExperimentLayerBindingResponse);
+  rpc GetExperimentLayerBinding(GetExperimentLayerBindingRequest) returns (GetExperimentLayerBindingResponse);
+  rpc GetLayerExperiments(GetLayerExperimentsRequest) returns (GetLayerExperimentsResponse);
+  rpc DeleteExperimentLayerBinding(DeleteExperimentLayerBindingRequest) returns (DeleteExperimentLayerBindingResponse);
+}
