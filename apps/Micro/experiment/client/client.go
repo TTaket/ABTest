@@ -19,7 +19,7 @@ type ExperimentClient interface {
 	UpdateExperimentBaseInfo(ctx context.Context, in *pb.UpdateExperimentBaseInfoRequest, opts ...grpc.CallOption) (*pb.UpdateExperimentBaseInfoResponse, error)
 	AddExperimentGroup(ctx context.Context, in *pb.AddExperimentGroupRequest, opts ...grpc.CallOption) (*pb.AddExperimentGroupResponse, error)
 	DeleteExperimentGroup(ctx context.Context, in *pb.DeleteExperimentGroupRequest, opts ...grpc.CallOption) (*pb.DeleteExperimentGroupResponse, error)
-	
+
 	Logger() *log.MyLogger
 }
 

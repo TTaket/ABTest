@@ -1,0 +1,1467 @@
+definitions:
+  pb_dynamic.CreateExperimentLayerBindingRequest:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.ExperimentLayerBinding'
+    type: object
+  pb_dynamic.CreateExperimentLayerBindingResponse:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.ExperimentLayerBinding'
+    type: object
+  pb_dynamic.CreateExperimentUserBindingRequest:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.ExperimentUserBinding'
+    type: object
+  pb_dynamic.CreateExperimentUserBindingResponse:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.ExperimentUserBinding'
+    type: object
+  pb_dynamic.CreateLayerUserBindingRequest:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.LayerUserBinding'
+    type: object
+  pb_dynamic.CreateLayerUserBindingResponse:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.LayerUserBinding'
+    type: object
+  pb_dynamic.DeleteExperimentLayerBindingRequest:
+    properties:
+      experiment_id:
+        type: string
+      layer_id:
+        type: string
+    type: object
+  pb_dynamic.DeleteExperimentLayerBindingResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
+  pb_dynamic.DeleteExperimentUserBindingRequest:
+    properties:
+      experiment_group_id:
+        type: string
+    type: object
+  pb_dynamic.DeleteExperimentUserBindingResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
+  pb_dynamic.DeleteLayerUserBindingRequest:
+    properties:
+      layer_id:
+        type: string
+    type: object
+  pb_dynamic.DeleteLayerUserBindingResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
+  pb_dynamic.ExperimentLayerBinding:
+    properties:
+      created_at:
+        description: 创建时间 (Unix时间戳)
+        type: integer
+      experiment_id:
+        description: 实验ID
+        type: string
+      layer_id:
+        description: 层ID
+        type: string
+      ratio:
+        description: 占有比例
+        type: number
+      updated_at:
+        description: 更新时间 (Unix时间戳)
+        type: integer
+    type: object
+  pb_dynamic.ExperimentUserBinding:
+    properties:
+      created_at:
+        description: 创建时间 (Unix时间戳)
+        type: integer
+      experiment_group_id:
+        description: 实验组ID
+        type: string
+      updated_at:
+        description: 更新时间 (Unix时间戳)
+        type: integer
+      user_package_id:
+        description: 用户包ID
+        type: string
+    type: object
+  pb_dynamic.GetExperimentLayerBindingResponse:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.ExperimentLayerBinding'
+    type: object
+  pb_dynamic.GetExperimentUserBindingResponse:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.ExperimentUserBinding'
+    type: object
+  pb_dynamic.GetLayerExperimentsResponse:
+    properties:
+      bindings:
+        items:
+          $ref: '#/definitions/pb_dynamic.ExperimentLayerBinding'
+        type: array
+      remaining_ratio:
+        description: 剩余可用流量比例
+        type: number
+    type: object
+  pb_dynamic.GetLayerUserBindingResponse:
+    properties:
+      binding:
+        $ref: '#/definitions/pb_dynamic.LayerUserBinding'
+    type: object
+  pb_dynamic.LayerUserBinding:
+    properties:
+      created_at:
+        description: 创建时间 (Unix时间戳)
+        type: integer
+      layer_id:
+        description: 层ID
+        type: string
+      updated_at:
+        description: 更新时间 (Unix时间戳)
+        type: integer
+      user_package_id:
+        description: 用户包ID
+        type: string
+    type: object
+  pb_experiment.AddExperimentGroupRequest:
+    properties:
+      experiment_id:
+        type: integer
+      group:
+        $ref: '#/definitions/pb_experiment.ExperimentGroup'
+    type: object
+  pb_experiment.AddExperimentGroupResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  pb_experiment.CreateExperimentRequest:
+    properties:
+      experiment_info:
+        $ref: '#/definitions/pb_experiment.ExperimentInfo'
+    type: object
+  pb_experiment.CreateExperimentResponse:
+    properties:
+      error:
+        type: string
+      experiment_id:
+        type: integer
+      experiment_info:
+        $ref: '#/definitions/pb_experiment.ExperimentInfo'
+      success:
+        type: boolean
+    type: object
+  pb_experiment.DeleteExperimentGroupResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  pb_experiment.DeleteExperimentResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  pb_experiment.ExperimentGroup:
+    properties:
+      allocation:
+        description: 实验组占实验比例
+        type: number
+      description:
+        type: string
+      from_experiment_id:
+        description: 实验组来源实验ID
+        type: integer
+      group_id:
+        type: integer
+      name:
+        type: string
+      whitelist_userpackageID:
+        description: 白名单
+        type: integer
+    type: object
+  pb_experiment.ExperimentInfo:
+    properties:
+      create_time:
+        type: string
+      description:
+        type: string
+      experiment_id:
+        type: integer
+      groups:
+        items:
+          $ref: '#/definitions/pb_experiment.ExperimentGroup'
+        type: array
+      name:
+        type: string
+      status:
+        $ref: '#/definitions/pb_experiment.ExperimentStatus'
+      update_time:
+        type: string
+    type: object
+  pb_experiment.ExperimentStatus:
+    enum:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    type: integer
+    x-enum-comments:
+      ExperimentStatus_EXPERIMENT_STATUS_CLOSED: 关闭状态
+      ExperimentStatus_EXPERIMENT_STATUS_READYING: 准备状态
+      ExperimentStatus_EXPERIMENT_STATUS_RUNNING: 灰度中
+      ExperimentStatus_EXPERIMENT_STATUS_STOPPED: 停止状态
+      ExperimentStatus_EXPERIMENT_STATUS_UNKNOWN: 未知状态
+      ExperimentStatus_ExPERIMENT_STATUS_LAUNCHED: launched状态
+    x-enum-varnames:
+    - ExperimentStatus_EXPERIMENT_STATUS_UNKNOWN
+    - ExperimentStatus_EXPERIMENT_STATUS_READYING
+    - ExperimentStatus_EXPERIMENT_STATUS_RUNNING
+    - ExperimentStatus_EXPERIMENT_STATUS_STOPPED
+    - ExperimentStatus_EXPERIMENT_STATUS_CLOSED
+    - ExperimentStatus_ExPERIMENT_STATUS_LAUNCHED
+  pb_experiment.GetExperimentResponse:
+    properties:
+      error:
+        type: string
+      experiment_info:
+        $ref: '#/definitions/pb_experiment.ExperimentInfo'
+      success:
+        type: boolean
+    type: object
+  pb_experiment.UpdateExperimentBaseInfoRequest:
+    properties:
+      experiment_info:
+        $ref: '#/definitions/pb_experiment.ExperimentInfo'
+    type: object
+  pb_experiment.UpdateExperimentBaseInfoResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  pb_layer.CreateLayerRequest:
+    properties:
+      layer:
+        $ref: '#/definitions/pb_layer.Layer'
+    type: object
+  pb_layer.CreateLayerResponse:
+    properties:
+      layer:
+        $ref: '#/definitions/pb_layer.Layer'
+    type: object
+  pb_layer.DeleteLayerResponse:
+    properties:
+      success:
+        type: boolean
+    type: object
+  pb_layer.GetLayerResponse:
+    properties:
+      layer:
+        $ref: '#/definitions/pb_layer.Layer'
+    type: object
+  pb_layer.Layer:
+    properties:
+      created_at:
+        description: 创建时间 (Unix时间戳)
+        type: integer
+      description:
+        description: 描述
+        type: string
+      id:
+        description: 层域ID
+        type: string
+      name:
+        description: 名称
+        type: string
+      parent_id:
+        description: 父级ID
+        type: string
+      ratio:
+        description: 占有父级比例
+        type: number
+      type:
+        allOf:
+        - $ref: '#/definitions/pb_layer.LayerType'
+        description: 类型（层或域）
+      updated_at:
+        description: 更新时间 (Unix时间戳)
+        type: integer
+    type: object
+  pb_layer.LayerType:
+    enum:
+    - 0
+    - 1
+    type: integer
+    x-enum-comments:
+      LayerType_DOMAIN: 域
+      LayerType_LAYER: 层
+    x-enum-varnames:
+    - LayerType_LAYER
+    - LayerType_DOMAIN
+  pb_layer.ListLayersResponse:
+    properties:
+      layers:
+        items:
+          $ref: '#/definitions/pb_layer.Layer'
+        type: array
+      total:
+        type: integer
+    type: object
+  pb_layer.UpdateLayerRequest:
+    properties:
+      layer:
+        $ref: '#/definitions/pb_layer.Layer'
+    type: object
+  pb_layer.UpdateLayerResponse:
+    properties:
+      layer:
+        $ref: '#/definitions/pb_layer.Layer'
+    type: object
+  pb_userb.AddUserRequest:
+    properties:
+      user_info:
+        $ref: '#/definitions/pb_userb.UserInfo'
+    type: object
+  pb_userb.AddUserResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+      user_id:
+        type: integer
+    type: object
+  pb_userb.BatchAddUserRequest:
+    properties:
+      user_info:
+        items:
+          $ref: '#/definitions/pb_userb.UserInfo'
+        type: array
+    type: object
+  pb_userb.BatchAddUserResponse:
+    properties:
+      errors:
+        items:
+          type: string
+        type: array
+      success:
+        type: boolean
+      user_id:
+        items:
+          type: integer
+        type: array
+    type: object
+  pb_userb.BatchDeleteUserRequest:
+    properties:
+      user_id:
+        items:
+          type: integer
+        type: array
+    type: object
+  pb_userb.BatchDeleteUserResponse:
+    properties:
+      errors:
+        items:
+          type: string
+        type: array
+      success:
+        type: boolean
+    type: object
+  pb_userb.BatchGetUserInfoRequest:
+    properties:
+      user_info:
+        items:
+          $ref: '#/definitions/pb_userb.UserInfo'
+        type: array
+    type: object
+  pb_userb.BatchGetUserInfoResponse:
+    properties:
+      errors:
+        items:
+          type: string
+        type: array
+      success:
+        type: boolean
+      user_info:
+        items:
+          $ref: '#/definitions/pb_userb.UserInfo'
+        type: array
+    type: object
+  pb_userb.BatchUpdateUserRequest:
+    properties:
+      user_id:
+        items:
+          type: integer
+        type: array
+      user_info:
+        items:
+          $ref: '#/definitions/pb_userb.UserInfo'
+        type: array
+    type: object
+  pb_userb.BatchUpdateUserResponse:
+    properties:
+      errors:
+        items:
+          type: string
+        type: array
+      success:
+        type: boolean
+    type: object
+  pb_userb.DeleteUserResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  pb_userb.GetUserInfoRequest:
+    properties:
+      user_info:
+        $ref: '#/definitions/pb_userb.UserInfo'
+    type: object
+  pb_userb.GetUserInfoResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+      user_info:
+        $ref: '#/definitions/pb_userb.UserInfo'
+    type: object
+  pb_userb.ScatterTrafficRequest:
+    properties:
+      userpackage_id:
+        type: integer
+    type: object
+  pb_userb.ScatterTrafficResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  pb_userb.UpdateUserRequest:
+    properties:
+      user_id:
+        type: integer
+      user_info:
+        $ref: '#/definitions/pb_userb.UserInfo'
+    type: object
+  pb_userb.UpdateUserResponse:
+    properties:
+      error:
+        type: string
+      success:
+        type: boolean
+    type: object
+  pb_userb.UserInfo:
+    properties:
+      address:
+        type: string
+      company:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      otherjson:
+        type: string
+      phone:
+        type: string
+      user_id:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /api/dynamic/experiment-layer-bindings/create-bind:
+    post:
+      consumes:
+      - application/json
+      description: 创建一个Experiment与Layer的绑定关系
+      parameters:
+      - description: 绑定信息
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_dynamic.CreateExperimentLayerBindingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.CreateExperimentLayerBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 创建Experiment与Layer绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/experiment-layer-bindings/delete-bind:
+    delete:
+      consumes:
+      - application/json
+      description: 删除特定的Experiment与Layer绑定关系
+      parameters:
+      - description: 删除请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_dynamic.DeleteExperimentLayerBindingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.DeleteExperimentLayerBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除Experiment与Layer绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/experiment-layer-bindings/get-bind:
+    get:
+      consumes:
+      - application/json
+      description: 获取特定的Experiment与Layer绑定关系
+      parameters:
+      - in: query
+        name: experiment_id
+        type: string
+      - in: query
+        name: layer_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.GetExperimentLayerBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 获取Experiment与Layer绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/experiment-user-bindings/create-bind:
+    post:
+      consumes:
+      - application/json
+      description: 创建一个Experiment与User的绑定关系
+      parameters:
+      - description: 绑定信息
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_dynamic.CreateExperimentUserBindingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.CreateExperimentUserBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 创建Experiment与User绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/experiment-user-bindings/delete-bind:
+    delete:
+      consumes:
+      - application/json
+      description: 删除特定的Experiment与User绑定关系
+      parameters:
+      - description: 删除请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_dynamic.DeleteExperimentUserBindingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.DeleteExperimentUserBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除Experiment与User绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/experiment-user-bindings/get-bind:
+    get:
+      consumes:
+      - application/json
+      description: 获取特定的Experiment与User绑定关系
+      parameters:
+      - in: query
+        name: experiment_group_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.GetExperimentUserBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 获取Experiment与User绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/layer-experiments/get-all-bylayer:
+    get:
+      consumes:
+      - application/json
+      description: 获取指定Layer关联的所有实验信息
+      parameters:
+      - in: query
+        name: layer_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.GetLayerExperimentsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 获取Layer关联的所有实验
+      tags:
+      - 实验
+  /api/dynamic/layer-user-bindings/create-bind:
+    post:
+      consumes:
+      - application/json
+      description: 创建一个Layer与User的绑定关系
+      parameters:
+      - description: 绑定信息
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_dynamic.CreateLayerUserBindingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.CreateLayerUserBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 创建Layer与User绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/layer-user-bindings/delete-bind:
+    delete:
+      consumes:
+      - application/json
+      description: 删除特定的Layer与User绑定关系
+      parameters:
+      - description: 删除请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_dynamic.DeleteLayerUserBindingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.DeleteLayerUserBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除Layer与User绑定关系
+      tags:
+      - 绑定关系
+  /api/dynamic/layer-user-bindings/get-bind:
+    get:
+      consumes:
+      - application/json
+      description: 获取特定的Layer与User绑定关系
+      parameters:
+      - in: query
+        name: layer_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_dynamic.GetLayerUserBindingResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 获取Layer与User绑定关系
+      tags:
+      - 绑定关系
+  /api/experiments/baseinfo/update-info:
+    put:
+      consumes:
+      - application/json
+      description: 根据实验ID更新实验基本信息
+      parameters:
+      - description: 实验ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 实验基本信息
+        in: body
+        name: info
+        required: true
+        schema:
+          $ref: '#/definitions/pb_experiment.UpdateExperimentBaseInfoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_experiment.UpdateExperimentBaseInfoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新实验基本信息
+      tags:
+      - 实验
+  /api/experiments/create-experiment:
+    post:
+      consumes:
+      - application/json
+      description: 创建一个新的实验
+      parameters:
+      - description: 实验信息
+        in: body
+        name: experiment
+        required: true
+        schema:
+          $ref: '#/definitions/pb_experiment.CreateExperimentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_experiment.CreateExperimentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 创建新实验
+      tags:
+      - 实验
+  /api/experiments/delete-experiment:
+    delete:
+      consumes:
+      - application/json
+      description: 根据实验ID删除实验
+      parameters:
+      - description: 实验ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_experiment.DeleteExperimentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除实验
+      tags:
+      - 实验
+  /api/experiments/delete-gropup:
+    delete:
+      consumes:
+      - application/json
+      description: 删除指定实验中的特定实验组
+      parameters:
+      - description: 实验ID
+        in: path
+        name: experiment_id
+        required: true
+        type: integer
+      - description: 实验组ID
+        in: path
+        name: group_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_experiment.DeleteExperimentGroupResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除实验组
+      tags:
+      - 实验
+  /api/experiments/getinfo:
+    get:
+      consumes:
+      - application/json
+      description: 根据实验ID获取实验详细信息
+      parameters:
+      - description: 实验ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_experiment.GetExperimentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 获取实验信息
+      tags:
+      - 实验
+  /api/experiments/groups/create-groups:
+    post:
+      consumes:
+      - application/json
+      description: 向现有实验添加一个新的实验组
+      parameters:
+      - description: 实验ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 实验组信息
+        in: body
+        name: group
+        required: true
+        schema:
+          $ref: '#/definitions/pb_experiment.AddExperimentGroupRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_experiment.AddExperimentGroupResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 添加实验组
+      tags:
+      - 实验
+  /api/layers/create:
+    post:
+      consumes:
+      - application/json
+      description: 创建一个新的层
+      parameters:
+      - description: 层信息
+        in: body
+        name: layer
+        required: true
+        schema:
+          $ref: '#/definitions/pb_layer.CreateLayerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_layer.CreateLayerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 创建新层
+      tags:
+      - 层
+  /api/layers/delete-layer:
+    delete:
+      consumes:
+      - application/json
+      description: 根据层ID删除层
+      parameters:
+      - description: 层ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_layer.DeleteLayerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除层
+      tags:
+      - 层
+  /api/layers/get-all:
+    get:
+      consumes:
+      - application/json
+      description: 获取所有层的列表
+      parameters:
+      - description: 层类型
+        in: query
+        name: type
+        type: integer
+      - description: 父层ID
+        in: query
+        name: parent_id
+        type: string
+      - description: 页码
+        in: query
+        name: page
+        type: integer
+      - description: 每页大小
+        in: query
+        name: page_size
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_layer.ListLayersResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 列出所有层
+      tags:
+      - 层
+  /api/layers/getinfo:
+    get:
+      consumes:
+      - application/json
+      description: 根据层ID获取层详细信息
+      parameters:
+      - description: 层ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_layer.GetLayerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 获取层信息
+      tags:
+      - 层
+  /api/layers/updateinfo:
+    put:
+      consumes:
+      - application/json
+      description: 更新层详细信息
+      parameters:
+      - description: 更新层请求
+        in: body
+        name: layer
+        required: true
+        schema:
+          $ref: '#/definitions/pb_layer.UpdateLayerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_layer.UpdateLayerResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新层信息
+      tags:
+      - 层
+  /api/traffic/scatter:
+    post:
+      consumes:
+      - application/json
+      description: 根据规则将用户流量分散到不同实验中
+      parameters:
+      - description: 流量分散请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.ScatterTrafficRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.ScatterTrafficResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 流量分散
+      tags:
+      - 流量
+  /api/users/adduser:
+    post:
+      consumes:
+      - application/json
+      description: 添加新用户
+      parameters:
+      - description: 用户信息
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.AddUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.AddUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 添加用户
+      tags:
+      - 用户
+  /api/users/batch-add-user:
+    post:
+      consumes:
+      - application/json
+      description: 一次添加多个用户
+      parameters:
+      - description: 批量添加用户请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.BatchAddUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.BatchAddUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量添加用户
+      tags:
+      - 用户
+  /api/users/batch-del-user:
+    delete:
+      consumes:
+      - application/json
+      description: 一次删除多个用户
+      parameters:
+      - description: 批量删除用户请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.BatchDeleteUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.BatchDeleteUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量删除用户
+      tags:
+      - 用户
+  /api/users/batch-get-info:
+    post:
+      consumes:
+      - application/json
+      description: 一次获取多个用户的详细信息
+      parameters:
+      - description: 批量获取用户信息请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.BatchGetUserInfoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.BatchGetUserInfoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量获取用户信息
+      tags:
+      - 用户
+  /api/users/batch-update-user:
+    put:
+      consumes:
+      - application/json
+      description: 一次更新多个用户的信息
+      parameters:
+      - description: 批量更新用户请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.BatchUpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.BatchUpdateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 批量更新用户信息
+      tags:
+      - 用户
+  /api/users/delete-user:
+    delete:
+      consumes:
+      - application/json
+      description: 根据用户ID删除用户
+      parameters:
+      - description: 用户ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.DeleteUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 删除用户
+      tags:
+      - 用户
+  /api/users/info/getinfo:
+    post:
+      consumes:
+      - application/json
+      description: 获取用户详细信息
+      parameters:
+      - description: 用户查询请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.GetUserInfoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.GetUserInfoResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 获取用户信息
+      tags:
+      - 用户
+  /api/users/update-userinfo:
+    put:
+      consumes:
+      - application/json
+      description: 更新用户详细信息
+      parameters:
+      - description: 更新用户请求
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/pb_userb.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/pb_userb.UpdateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: 更新用户信息
+      tags:
+      - 用户
+swagger: "2.0"

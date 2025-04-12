@@ -33,7 +33,7 @@ func NewLayerHandler() *LayerHandler {
 // @Success 200 {object} pb.GetLayerResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/layers/{id} [get]
+// @Router /api/layers/getinfo [get]
 func (h *LayerHandler) GetLayer(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -63,7 +63,7 @@ func (h *LayerHandler) GetLayer(c *gin.Context) {
 // @Success 200 {object} pb.CreateLayerResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/layers [post]
+// @Router /api/layers/create [post]
 func (h *LayerHandler) CreateLayer(c *gin.Context) {
 	var req pb.CreateLayerRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -90,7 +90,7 @@ func (h *LayerHandler) CreateLayer(c *gin.Context) {
 // @Success 200 {object} pb.UpdateLayerResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/layers [put]
+// @Router /api/layers/updateinfo [put]
 func (h *LayerHandler) UpdateLayer(c *gin.Context) {
 	var req pb.UpdateLayerRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -117,7 +117,7 @@ func (h *LayerHandler) UpdateLayer(c *gin.Context) {
 // @Success 200 {object} pb.DeleteLayerResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/layers/{id} [delete]
+// @Router /api/layers/delete-layer [delete]
 func (h *LayerHandler) DeleteLayer(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
@@ -150,7 +150,7 @@ func (h *LayerHandler) DeleteLayer(c *gin.Context) {
 // @Success 200 {object} pb.ListLayersResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/layers [get]
+// @Router /api/layers/get-all [get]
 func (h *LayerHandler) ListLayers(c *gin.Context) {
 	var req pb.ListLayersRequest
 

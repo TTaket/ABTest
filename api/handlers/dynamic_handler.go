@@ -31,7 +31,7 @@ func NewDynamicHandler() *DynamicHandler {
 // @Success 200 {object} pb.CreateLayerUserBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/layer-user-bindings [post]
+// @Router /api/dynamic/layer-user-bindings/create-bind [post]
 func (h *DynamicHandler) CreateLayerUserBinding(c *gin.Context) {
 	var req pb.CreateLayerUserBindingRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -58,7 +58,7 @@ func (h *DynamicHandler) CreateLayerUserBinding(c *gin.Context) {
 // @Success 200 {object} pb.GetLayerUserBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/layer-user-bindings [get]
+// @Router /api/dynamic/layer-user-bindings/get-bind [get]
 func (h *DynamicHandler) GetLayerUserBinding(c *gin.Context) {
 	var req pb.GetLayerUserBindingRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
@@ -85,7 +85,7 @@ func (h *DynamicHandler) GetLayerUserBinding(c *gin.Context) {
 // @Success 200 {object} pb.DeleteLayerUserBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/layer-user-bindings [delete]
+// @Router /api/dynamic/layer-user-bindings/delete-bind [delete]
 func (h *DynamicHandler) DeleteLayerUserBinding(c *gin.Context) {
 	var req pb.DeleteLayerUserBindingRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -112,7 +112,7 @@ func (h *DynamicHandler) DeleteLayerUserBinding(c *gin.Context) {
 // @Success 200 {object} pb.CreateExperimentUserBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/experiment-user-bindings [post]
+// @Router /api/dynamic/experiment-user-bindings/create-bind [post]
 func (h *DynamicHandler) CreateExperimentUserBinding(c *gin.Context) {
 	var req pb.CreateExperimentUserBindingRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -139,7 +139,7 @@ func (h *DynamicHandler) CreateExperimentUserBinding(c *gin.Context) {
 // @Success 200 {object} pb.GetExperimentUserBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/experiment-user-bindings [get]
+// @Router /api/dynamic/experiment-user-bindings/get-bind  [get]
 func (h *DynamicHandler) GetExperimentUserBinding(c *gin.Context) {
 	var req pb.GetExperimentUserBindingRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
@@ -166,7 +166,7 @@ func (h *DynamicHandler) GetExperimentUserBinding(c *gin.Context) {
 // @Success 200 {object} pb.DeleteExperimentUserBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/experiment-user-bindings [delete]
+// @Router /api/dynamic/experiment-user-bindings/delete-bind  [delete]
 func (h *DynamicHandler) DeleteExperimentUserBinding(c *gin.Context) {
 	var req pb.DeleteExperimentUserBindingRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -193,7 +193,7 @@ func (h *DynamicHandler) DeleteExperimentUserBinding(c *gin.Context) {
 // @Success 200 {object} pb.CreateExperimentLayerBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/experiment-layer-bindings [post]
+// @Router /api/dynamic/experiment-layer-bindings/create-bind [post]
 func (h *DynamicHandler) CreateExperimentLayerBinding(c *gin.Context) {
 	var req pb.CreateExperimentLayerBindingRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -220,7 +220,7 @@ func (h *DynamicHandler) CreateExperimentLayerBinding(c *gin.Context) {
 // @Success 200 {object} pb.GetExperimentLayerBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/experiment-layer-bindings [get]
+// @Router /api/dynamic/experiment-layer-bindings/get-bind [get]
 func (h *DynamicHandler) GetExperimentLayerBinding(c *gin.Context) {
 	var req pb.GetExperimentLayerBindingRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
@@ -247,7 +247,7 @@ func (h *DynamicHandler) GetExperimentLayerBinding(c *gin.Context) {
 // @Success 200 {object} pb.GetLayerExperimentsResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/layer-experiments [get]
+// @Router /api/dynamic/layer-experiments/get-all-bylayer [get]
 func (h *DynamicHandler) GetLayerExperiments(c *gin.Context) {
 	var req pb.GetLayerExperimentsRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
@@ -274,7 +274,7 @@ func (h *DynamicHandler) GetLayerExperiments(c *gin.Context) {
 // @Success 200 {object} pb.DeleteExperimentLayerBindingResponse
 // @Failure 400 {object} map[string]interface{}
 // @Failure 500 {object} map[string]interface{}
-// @Router /api/dynamic/experiment-layer-bindings [delete]
+// @Router /api/dynamic/experiment-layer-bindings/delete-bind [delete]
 func (h *DynamicHandler) DeleteExperimentLayerBinding(c *gin.Context) {
 	var req pb.DeleteExperimentLayerBindingRequest
 	if err := c.ShouldBindJSON(&req); err != nil {

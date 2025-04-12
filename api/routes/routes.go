@@ -39,9 +39,13 @@ func setupExperimentRoutes(router *gin.RouterGroup) {
 	experimentHandler := handlers.NewExperimentHandler()
 	experiments := router.Group("/experiments")
 	{
-		experiments.GET("/:id", experimentHandler.GetExperiment)
-		experiments.POST("", experimentHandler.CreateExperiment)
-		experiments.DELETE("/:id", experimentHandler.DeleteExperiment)
+		// 按照Swagger定义修正路由
+		experiments.GET("/getinfo", experimentHandler.GetExperiment)
+		experiments.POST("/create-experiment", experimentHandler.CreateExperiment)
+		experiments.DELETE("/delete-experiment", experimentHandler.DeleteExperiment)
+		experiments.PUT("/baseinfo/update-info", experimentHandler.UpdateExperimentBaseInfo)
+		experiments.POST("/groups/create-groups", experimentHandler.AddExperimentGroup)
+		experiments.DELETE("/delete-gropup", experimentHandler.DeleteExperimentGroup)
 	}
 }
 
@@ -50,10 +54,23 @@ func setupUserbRoutes(router *gin.RouterGroup) {
 	userbHandler := handlers.NewUserbHandler()
 	users := router.Group("/users")
 	{
-		users.POST("/info", userbHandler.GetUserInfo)
-		users.POST("", userbHandler.AddUser)
-		users.PUT("", userbHandler.UpdateUser)
-		users.DELETE("/:id", userbHandler.DeleteUser)
+		// 按照Swagger定义修正路由
+		users.POST("/info/getinfo", userbHandler.GetUserInfo)
+		users.POST("/adduser", userbHandler.AddUser)
+		users.PUT("/update-userinfo", userbHandler.UpdateUser)
+		users.DELETE("/delete-user", userbHandler.DeleteUser)
+
+		// 批量操作相关路由修正
+		users.POST("/batch-add-user", userbHandler.BatchAddUser)
+		users.DELETE("/batch-del-user", userbHandler.BatchDeleteUser)
+		users.PUT("/batch-update-user", userbHandler.BatchUpdateUser)
+		users.POST("/batch-get-info", userbHandler.BatchGetUserInfo)
+	}
+
+	// 流量分散路由
+	traffic := router.Group("/traffic")
+	{
+		traffic.POST("/scatter", userbHandler.ScatterTraffic)
 	}
 }
 
@@ -62,36 +79,37 @@ func setupLayerRoutes(router *gin.RouterGroup) {
 	layerHandler := handlers.NewLayerHandler()
 	layers := router.Group("/layers")
 	{
-		layers.GET("", layerHandler.ListLayers)
-		layers.GET("/:id", layerHandler.GetLayer)
-		layers.POST("", layerHandler.CreateLayer)
-		layers.PUT("", layerHandler.UpdateLayer)
-		layers.DELETE("/:id", layerHandler.DeleteLayer)
+		// 按照Swagger定义修正路由
+		layers.GET("/get-all", layerHandler.ListLayers)
+		layers.GET("/getinfo", layerHandler.GetLayer)
+		layers.POST("/create", layerHandler.CreateLayer)
+		layers.PUT("/updateinfo", layerHandler.UpdateLayer)
+		layers.DELETE("/delete-layer", layerHandler.DeleteLayer)
 	}
 }
 
-// RegisterRoutes 注册路由
+// setupDynamicRoutes 设置动态绑定相关路由
 func setupDynamicRoutes(router *gin.RouterGroup) {
 	dynamicHandler := handlers.NewDynamicHandler()
 
-	dynamics := router.Group("/api/dynamic")
+	dynamics := router.Group("/dynamic")
 	{
-		// Layer-User binding 路由
-		dynamics.POST("/layer-user", dynamicHandler.CreateLayerUserBinding)
-		dynamics.GET("/layer-user", dynamicHandler.GetLayerUserBinding)
-		dynamics.DELETE("/layer-user", dynamicHandler.DeleteLayerUserBinding)
+		// 按照Swagger定义修正Layer-User绑定路由
+		dynamics.POST("/layer-user-bindings/create-bind", dynamicHandler.CreateLayerUserBinding)
+		dynamics.GET("/layer-user-bindings/get-bind", dynamicHandler.GetLayerUserBinding)
+		dynamics.DELETE("/layer-user-bindings/delete-bind", dynamicHandler.DeleteLayerUserBinding)
 
-		// Experiment-User binding 路由
-		dynamics.POST("/experiment-user", dynamicHandler.CreateExperimentUserBinding)
-		dynamics.GET("/experiment-user", dynamicHandler.GetExperimentUserBinding)
-		dynamics.DELETE("/experiment-user", dynamicHandler.DeleteExperimentUserBinding)
+		// 按照Swagger定义修正Experiment-User绑定路由
+		dynamics.POST("/experiment-user-bindings/create-bind", dynamicHandler.CreateExperimentUserBinding)
+		dynamics.GET("/experiment-user-bindings/get-bind", dynamicHandler.GetExperimentUserBinding)
+		dynamics.DELETE("/experiment-user-bindings/delete-bind", dynamicHandler.DeleteExperimentUserBinding)
 
-		// Experiment-Layer binding 路由
-		dynamics.POST("/experiment-layer", dynamicHandler.CreateExperimentLayerBinding)
-		dynamics.GET("/experiment-layer", dynamicHandler.GetExperimentLayerBinding)
-		dynamics.DELETE("/experiment-layer", dynamicHandler.DeleteExperimentLayerBinding)
+		// 按照Swagger定义修正Experiment-Layer绑定路由
+		dynamics.POST("/experiment-layer-bindings/create-bind", dynamicHandler.CreateExperimentLayerBinding)
+		dynamics.GET("/experiment-layer-bindings/get-bind", dynamicHandler.GetExperimentLayerBinding)
+		dynamics.DELETE("/experiment-layer-bindings/delete-bind", dynamicHandler.DeleteExperimentLayerBinding)
 
 		// 其他路由
-		dynamics.GET("/layer-experiments", dynamicHandler.GetLayerExperiments)
+		dynamics.GET("/layer-experiments/get-all-bylayer", dynamicHandler.GetLayerExperiments)
 	}
 }
